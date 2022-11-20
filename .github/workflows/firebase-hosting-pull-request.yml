@@ -7,6 +7,15 @@ jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
+    env:
+      REACT_APP_FIREBASE_API_KEY: "${{ secrets.REACT_APP_FIREBASE_API_KEY }}"
+      REACT_APP_FIREBASE_AUTH_DOMAIN: "${{ secrets.REACT_APP_FIREBASE_AUTH_DOMAIN }}"
+      REACT_APP_FIREBASE_PROJECT_ID: "${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}"
+      REACT_APP_FIREBASE_STORAGE: "${{ secrets.REACT_APP_FIREBASE_STORAGE }}"
+      REACT_APP_FIREBASE_SENDER_ID: "${{ secrets.REACT_APP_FIREBASE_SENDER_ID }}"
+      REACT_APP_FIREBASE_APP_ID: "${{ secrets.REACT_APP_FIREBASE_APP_ID }}"
+      REACT_APP_FIREBASE_MEASUREMENT_ID: "${{ secrets.REACT_APP_FIREBASE_MEASUREMENT_ID }}"
+    steps:
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js environment
