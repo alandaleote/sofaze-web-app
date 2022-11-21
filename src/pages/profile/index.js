@@ -1,15 +1,13 @@
 import * as React from "react";
 import { useAuthValue } from "../../auth-context";
-import { Button, CssBaseline, Grid, Paper } from "@mui/material";
+import { CssBaseline, Grid, Paper } from "@mui/material";
 
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/firebase.config";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import "./profile.css";
-import { Link } from "react-router-dom";
 import Navbar from "../../components/molecules/nav-bar";
 
 const theme = createTheme();
