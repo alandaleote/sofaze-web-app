@@ -1,0 +1,10 @@
+/* LINK ========================================================= */
+.link {
+  color: var(--primary-blue);
+}
+:hover.link {
+  color: var(--secondary-blue);
+}
+:focus {
+  color: var(--secondary-blue);
+}

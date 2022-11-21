@@ -1,0 +1,29 @@
+/* CONTAINER =================================================== */
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/* CONTAINER LINK =================================================== */
+.container-link {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  font-size: 14px;
+  gap: 20px;
+}
+/* LINK ========================================================= */
+.link {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  color: var(--primary-blue);
+}
+:hover.link {
+  color: var(--secondary-blue);
+}
+:focus {
+  color: var(--secondary-blue);
+}
+
+
