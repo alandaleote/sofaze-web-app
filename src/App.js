@@ -31,7 +31,7 @@ function App() {
         <Routes>
           <Route
             exact
-            path="/"
+            path="/profile"
             element={
               <PrivateRoute>
                 <Profile />
@@ -39,7 +39,7 @@ function App() {
             }
           />
           <Route
-            path="/home"
+            path="/"
             element={
               <PrivateRoute>
                 <Home />

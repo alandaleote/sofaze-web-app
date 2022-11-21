@@ -145,8 +145,8 @@ export default function Login() {
               alignItems: "center",
             }}
           >
-            <Box container noValidate sx={{ mb: 10 }}>
-              <Logo />
+            <Box container noValidate sx={{ mb: 5 }}>
+              <Logo width={200} />
             </Box>
 
             <Avatar sx={{ bgcolor: "#ff5864" }}>
@@ -203,6 +203,7 @@ export default function Login() {
               </FormControl>
 
               <FormControlLabel
+                sx={{ mb: 2, mt: 1 }}
                 control={
                   <Checkbox value="remember" sx={{ color: "#3f88c5" }} />
                 }
@@ -214,7 +215,7 @@ export default function Login() {
                 onClick={login}
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, background: "#3f88c5" }}
+                sx={{ mt: 3, mb: 3, background: "#3f88c5" }}
               >
                 Entrar
               </Button>

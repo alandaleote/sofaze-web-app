@@ -132,7 +132,7 @@ export default function Register() {
             }}
           >
             <Box component="form" noValidate sx={{ mb: 10 }}>
-              <Logo />
+              <Logo width={200}  />
             </Box>
 
 
