@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useAuthValue } from "../../auth-context";
-import { CssBaseline, Grid, Paper } from "@mui/material";
+import { CssBaseline, Grid } from "@mui/material";
 
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
@@ -8,7 +8,6 @@ import CardContent from "@mui/material/CardContent";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import "./profile.css";
-import Navbar from "../../components/molecules/nav-bar";
 
 const theme = createTheme();
 
@@ -31,7 +30,6 @@ function Profile() {
           sm={8}
           md={5}
           sx={{ height: "100%" }}
-          component={Paper}
           elevation={6}
           square
         >
@@ -68,8 +66,6 @@ function Profile() {
                 </CardContent>
               </Box>
             </Box>
-
-            <Navbar />
           </Box>
         </Grid>
       </Grid>

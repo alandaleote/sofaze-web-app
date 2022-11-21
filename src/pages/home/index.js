@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CssBaseline, Grid, Paper } from "@mui/material";
+import { CssBaseline, Grid } from "@mui/material";
 
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -25,7 +25,6 @@ export default function Home() {
           sm={8}
           md={5}
           sx={{ height: "100%" }}
-          component={Paper}
           elevation={6}
           square
         >
@@ -45,12 +44,19 @@ export default function Home() {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                height:"100%"
+                height: "100%",
               }}
             >
               <img src="/images/logo.png" alt="" />
             </Box>
-            <Navbar />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Navbar />
+            </Box>
           </Box>
         </Grid>
       </Grid>

@@ -12,7 +12,6 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import { useNavigate, Link } from "react-router-dom";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -20,7 +19,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Logo } from "../../components/icons";
 import "./register.css";
-
 
 const theme = createTheme();
 
@@ -117,7 +115,6 @@ export default function Register() {
           sm={8}
           md={5}
           sx={{ height: "100vh" }}
-          component={Paper}
           elevation={6}
           square
         >
@@ -132,9 +129,8 @@ export default function Register() {
             }}
           >
             <Box component="form" noValidate sx={{ mb: 10 }}>
-              <Logo width={200}  />
+              <Logo width={200} />
             </Box>
-
 
             <Avatar sx={{ bgcolor: "#ff5864" }}>
               <LockOutlinedIcon />
@@ -184,7 +180,7 @@ export default function Register() {
                 onClick={register}
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2, background: "#3f88c5"}}
+                sx={{ mt: 3, mb: 2, background: "#3f88c5" }}
               >
                 Entrar
               </Button>

@@ -21,7 +21,6 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
@@ -131,7 +130,6 @@ export default function Login() {
           sm={8}
           md={5}
           sx={{ height: "100vh" }}
-          component={Paper}
           elevation={6}
           square
         >

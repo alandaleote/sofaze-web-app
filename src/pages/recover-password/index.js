@@ -8,7 +8,6 @@ import {
   TextField,
   Grid,
   Box,
-  Paper,
   Button,
   ThemeProvider,
   createTheme,
@@ -52,7 +51,6 @@ export default function RecoverPassword() {
           sm={8}
           md={5}
           sx={{ height: "100vh" }}
-          component={Paper}
           elevation={6}
           square
         >
@@ -67,7 +65,7 @@ export default function RecoverPassword() {
             }}
           >
             <Box component="form" noValidate sx={{ mb: 10 }}>
-              <Logo width={200}  />
+              <Logo width={200} />
             </Box>
 
             <Avatar sx={{ bgcolor: "#ff5864" }}>
