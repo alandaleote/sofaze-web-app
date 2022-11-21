@@ -13,7 +13,6 @@ import {
   Box,
   Button,
   Checkbox,
-  createTheme,
   CssBaseline,
   FormControl,
   FormControlLabel,
@@ -24,11 +23,11 @@ import {
   OutlinedInput,
   Paper,
   TextField,
-  ThemeProvider,
   Typography,
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -44,8 +43,6 @@ export default function Login() {
   const navigate = useNavigate();
   const [msg, setMsg] = React.useState("");
   const [msgType, setMsgType] = React.useState("");
-
-  console.log(auth);
 
   const [values, setValues] = React.useState({
     amount: "",

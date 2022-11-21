@@ -2,19 +2,19 @@ import * as React from "react";
 import { useAuthValue } from "../../auth-context";
 import {
   Button,
-  createTheme,
   CssBaseline,
   Grid,
   Paper,
-  ThemeProvider,
 } from "@mui/material";
 
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import "./profile.css";
+import { Link } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -30,6 +30,7 @@ function Profile() {
         sx={{ height: "100vh" }}
       >
         <CssBaseline />
+
         <Grid
           item
           xs={12}
@@ -50,12 +51,30 @@ function Profile() {
               alignItems: "center",
             }}
           >
+            <Box
+              container
+              noValidate
+              sx={{
+                mb: 10,
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box>
+                <Link className="link" to="/home" variant="body2">
+                  Home
+                </Link>
+              </Box>
+              <Button onClick={() => signOut(auth)} size="small">
+                Sair
+              </Button>
+            </Box>
             <Box noValidate sx={{ mb: 10 }}>
               <img src="/images/logo.png" alt="" />
             </Box>
-            <Button onClick={() => signOut(auth)} size="small"  sx={{ mt: 3, mb: 2}}>
-              Sair
-            </Button>
+
             <CardContent>
               <strong>Email: </strong>
               {currentUser?.email}

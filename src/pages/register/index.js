@@ -63,7 +63,6 @@ export default function Register() {
             .catch((error) => {
               setMsgType("error");
               alert(error.message);
-              console.log(error.message);
               switch (error.message) {
                 default:
                   setMsg("Um erro ocorreu. Tente novamente mais tarde!");
@@ -72,7 +71,6 @@ export default function Register() {
         })
         .catch((error) => {
           alert(error.message);
-          console.log(error.message);
           setMsgType("error");
           switch (error.message) {
             case "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).":
