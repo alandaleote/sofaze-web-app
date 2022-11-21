@@ -1,0 +1,39 @@
+.container{
+    height: 0;
+}
+
+.container-nav {
+    position: relative;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.header-nav-open {
+  position: static;
+  height: calc(100vh - 1rem);
+  width: 100%;
+  z-index: 9999;
+  transform: translatey(-100%);
+  background-color: white;
+}
+.header-nav-container {
+  position: sticky;
+  top: 0;
+  height: 4.5rem;
+  width: 100%;
+  z-index: 9999;
+  background-color: white;
+}
+
+.container-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 1rem);
+    overflow: hidden;
+    padding: 1rem 0rem;
+}
+.menu-container {
+    overflow: hidden;
+}
+

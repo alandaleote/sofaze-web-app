@@ -1,20 +1,14 @@
 import * as React from "react";
 import { useAuthValue } from "../../auth-context";
-import {
-  Button,
-  CssBaseline,
-  Grid,
-  Paper,
-} from "@mui/material";
+import { CssBaseline, Grid, Paper } from "@mui/material";
 
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/firebase.config";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import "./profile.css";
-import { Link } from "react-router-dom";
+import Navbar from "../../components/molecules/nav-bar";
 
 const theme = createTheme();
 
@@ -27,7 +21,7 @@ function Profile() {
         className="container"
         container
         component="main"
-        sx={{ height: "100vh" }}
+        sx={{ height: "100%" }}
       >
         <CssBaseline />
 
@@ -36,7 +30,7 @@ function Profile() {
           xs={12}
           sm={8}
           md={5}
-          sx={{ height: "100vh" }}
+          sx={{ height: "100%" }}
           component={Paper}
           elevation={6}
           square
@@ -46,43 +40,36 @@ function Profile() {
               mx: 4,
               height: "100vh",
               display: "flex",
+              justifyContent: "space-between",
               flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
             }}
           >
             <Box
-              container
               noValidate
               sx={{
                 mb: 10,
-                width: "100%",
                 display: "flex",
+                flexDirection: "column",
+                gap: 5,
+                justifyContent: "center",
                 alignItems: "center",
-                justifyContent: "space-between",
+                height: "100%",
               }}
             >
-              <Box>
-                <Link className="link" to="/home" variant="body2">
-                  Home
-                </Link>
-              </Box>
-              <Button onClick={() => signOut(auth)} size="small">
-                Sair
-              </Button>
-            </Box>
-            <Box noValidate sx={{ mb: 10 }}>
               <img src="/images/logo.png" alt="" />
+              <Box>
+                <CardContent>
+                  <strong>Email: </strong>
+                  {currentUser?.email}
+                </CardContent>
+                <CardContent>
+                  <strong>Email verificado: </strong>
+                  {`${currentUser?.emailVerified}`}
+                </CardContent>
+              </Box>
             </Box>
 
-            <CardContent>
-              <strong>Email: </strong>
-              {currentUser?.email}
-            </CardContent>
-            <CardContent>
-              <strong>Email verificado: </strong>
-              {`${currentUser?.emailVerified}`}
-            </CardContent>
+            <Navbar />
           </Box>
         </Grid>
       </Grid>

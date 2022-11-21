@@ -67,7 +67,7 @@ export default function RecoverPassword() {
             }}
           >
             <Box component="form" noValidate sx={{ mb: 10 }}>
-              <Logo />
+              <Logo width={200}  />
             </Box>
 
             <Avatar sx={{ bgcolor: "#ff5864" }}>

@@ -97,7 +97,7 @@ function VerifyEmail() {
             }}
           >
             <Box component="form" noValidate sx={{ mb: 5 }}>
-              <Logo />
+              <Logo width={200} />
             </Box>
             <Avatar sx={{ bgcolor: "#f44336", width: "70px", height: "70px" }}>
               <MarkEmailReadOutlinedIcon
