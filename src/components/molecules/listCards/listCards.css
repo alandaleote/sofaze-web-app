@@ -1,0 +1,9 @@
+.container-list-cards {
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
+  justify-content: flex-start;
+  max-width: 420px;
+  width: 100%;
+  padding-left: 1rem;
+}
