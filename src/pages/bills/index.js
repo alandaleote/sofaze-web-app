@@ -5,11 +5,11 @@ import { CssBaseline, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Navbar from "../../components/molecules/nav-bar";
-import ListCards from "../../components/molecules/listCards";
+import FormPayable from "../../components/molecules/formPayable";
 
 const theme = createTheme();
 
-export default function Home() {
+export default function Bills() {
   return (
     <ThemeProvider theme={theme}>
       <Grid
@@ -31,6 +31,7 @@ export default function Home() {
         >
           <Box
             sx={{
+              mx: 4,
               height: "100vh",
               display: "flex",
               justifyContent: "space-between",
@@ -38,19 +39,28 @@ export default function Home() {
             }}
           >
             <Box
-              noValidate
+              mt={10}
+              mb={5}
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
+              }}
+            >
+              <img src="/images/logo.png" alt="" width={100} />
+            </Box>
+
+            <Box
+              noValidate
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-start",
                 height: "100%",
               }}
             >
-              <img src="/images/logo.png" alt="" />
-              <Box mt={6}>
-                <ListCards />
-              </Box>
+              <FormPayable />
             </Box>
             <Box
               mb={3}

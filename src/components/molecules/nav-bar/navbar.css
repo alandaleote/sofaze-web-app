@@ -4,7 +4,7 @@
 }
 
 .container-wrapper {
-    width: 100%;
+  width: 100%;
 }
 
 .container-nav {
@@ -34,10 +34,13 @@
 .container-menu {
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content: center;
   height: calc(100vh - 1rem);
   overflow: hidden;
   padding: 1rem 0rem;
+  justify-content: space-between;
+  padding: 0 32px;
+  padding-top: 5rem;
 }
 .menu-container {
   overflow: hidden;
@@ -48,4 +51,5 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 32px;
 }

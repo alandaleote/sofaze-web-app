@@ -118,7 +118,7 @@ function Navbar() {
             </IconButton>
 
             <IconButton>
-              <Link to="/profile">
+              <Link to="/contas">
                 <AttachMoneyOutlinedIcon sx={{ fontSize: 32 }} />
               </Link>
             </IconButton>
