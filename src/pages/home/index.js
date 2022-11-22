@@ -20,50 +20,39 @@ export default function Home() {
       >
         <CssBaseline />
 
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          md={5}
-          sx={{ height: "100%", overflow: "hidden" }}
-          elevation={6}
-          square
+        <Box
+          sx={{
+            height: "100vh",
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "column",
+          }}
         >
           <Box
+            noValidate
             sx={{
-              mx: 4,
-              height: "100vh",
               display: "flex",
-              justifyContent: "space-between",
               flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100%",
             }}
           >
-            <Box
-              noValidate
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-              }}
-            >
-              <img src="/images/logo.png" alt="" />
-              <Box mt={6}>
-                <ListCards />
-              </Box>
-            </Box>
-            <Box
-              mb={3}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Navbar />
+            <img src="/images/logo.png" alt="" />
+            <Box mt={6}>
+              <ListCards />
             </Box>
           </Box>
-        </Grid>
+          <Box
+            mb={3}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Navbar />
+          </Box>
+        </Box>
       </Grid>
     </ThemeProvider>
   );

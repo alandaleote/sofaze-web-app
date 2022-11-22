@@ -3,7 +3,19 @@
   flex-direction: row;
   overflow: auto;
   justify-content: flex-start;
-  max-width: 420px;
+
   width: 100%;
   padding-left: 1rem;
+}
+
+@media screen and (max-width: 42rem) {
+  .container-list-cards {
+    max-width: 420px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .container-list-cards {
+    max-width: 320px;
+  }
 }
