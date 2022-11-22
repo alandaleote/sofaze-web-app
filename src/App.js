@@ -16,6 +16,7 @@ import PrivateRoute from "./PrivateRoute";
 import Home from "./pages/home";
 import RecoverPassword from "./pages/recover-password";
 import Bills from "./pages/bills";
+import ListTasks from "./pages/listTasks";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -36,6 +37,15 @@ function App() {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+              <Route
+            exact
+            path="/lista-de-tarefas"
+            element={
+              <PrivateRoute>
+                <ListTasks />
               </PrivateRoute>
             }
           />

@@ -83,8 +83,8 @@ function Navbar() {
 
                   <ListItem onClick={() => setMenuOpen(false)}>
                     <ListItemText>
-                      <Link to="/profile" className={classes.link}>
-                        Profile
+                      <Link to="/lista-de-tarefas" className={classes.link}>
+                        Lista de tarefas
                       </Link>
                     </ListItemText>
                   </ListItem>
