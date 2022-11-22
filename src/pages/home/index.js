@@ -5,6 +5,7 @@ import { CssBaseline, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Navbar from "../../components/molecules/nav-bar";
+import ListCards from "../../components/molecules/listCards";
 
 const theme = createTheme();
 
@@ -24,7 +25,7 @@ export default function Home() {
           xs={12}
           sm={8}
           md={5}
-          sx={{ height: "100%" }}
+          sx={{ height: "100%", overflow: "hidden" }}
           elevation={6}
           square
         >
@@ -40,16 +41,20 @@ export default function Home() {
             <Box
               noValidate
               sx={{
-                mb: 10,
                 display: "flex",
+                flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
                 height: "100%",
               }}
             >
               <img src="/images/logo.png" alt="" />
+              <Box mt={6}>
+                <ListCards />
+              </Box>
             </Box>
             <Box
+              mb={3}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",

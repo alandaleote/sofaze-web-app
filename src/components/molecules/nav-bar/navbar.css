@@ -29,14 +29,12 @@
   z-index: 9999;
   background-color: white;
   width: 100%;
-  min-width: 300px;
-  max-width: 900px;
 }
 
 .container-menu {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content:center;
   height: calc(100vh - 1rem);
   overflow: hidden;
   padding: 1rem 0rem;
