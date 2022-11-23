@@ -8,7 +8,7 @@ import Layout from "../../components/organisms/layout";
 
 const theme = createTheme();
 
-export default function ListTasks() {
+export default function ListBills() {
   return (
     <ThemeProvider theme={theme}>
       <Grid
@@ -38,9 +38,7 @@ export default function ListTasks() {
             }}
           >
             <Layout
-              title="Lista de tarefas"
-              backgroudGradient=" linear-gradient(180deg, #F5BE2E 19.98%, rgba(255, 255, 255, 0) 100%); linear-gradient(180deg, #F5BE2E 19.98%, rgba(255, 255, 255, 0) 100%);"
-              colorButton="#F5BE2E"
+              title="Controle de Contas"
             />
           </Box>
         </Grid>
