@@ -1,0 +1,28 @@
+.container-card-large {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  gap: 1rem;
+  width: 100%;
+  min-width: 280px;
+  height: 200px;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.title-card-large {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.content-card-large {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+}

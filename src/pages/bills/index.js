@@ -1,15 +1,40 @@
 import React from "react";
 
 import { CssBaseline, Grid } from "@mui/material";
-
-import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Navbar from "../../components/molecules/nav-bar";
-import FormPayable from "../../components/molecules/formPayable";
+import LayoutLists from "../../components/organisms/layoutLists";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LocalAirportIcon from "@mui/icons-material/LocalAirport";
+import FormatPaintIcon from "@mui/icons-material/FormatPaint";
+import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 
 const theme = createTheme();
 
 export default function Bills() {
+  const listCards = [
+    {
+      title: "Supermercado",
+      icons: <ShoppingCartIcon sx={{ fontSize: 32 }} />,
+      color: "#ff5864",
+      width: "100px",
+      height: "120px",
+    },
+    {
+      title: "Mala para viagem",
+      icons: <LocalAirportIcon sx={{ fontSize: 32 }} />,
+      color: "#3f88c5",
+      width: "100px",
+      height: "120px",
+    },
+    {
+      title: "Reparos na casa",
+      icons: <FormatPaintIcon sx={{ fontSize: 32 }} />,
+      color: "#ffba06",
+      width: "100px",
+      height: "120px",
+    },
+  ];
+
   return (
     <ThemeProvider theme={theme}>
       <Grid
@@ -20,59 +45,14 @@ export default function Bills() {
       >
         <CssBaseline />
 
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          md={5}
-          sx={{ height: "100%", overflow: "hidden" }}
-          elevation={6}
-          square
-        >
-          <Box
-            sx={{
-              mx: 4,
-              height: "100vh",
-              display: "flex",
-              justifyContent: "space-between",
-              flexDirection: "column",
-            }}
-          >
-            <Box
-              mt={10}
-              mb={5}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img src="/images/logo.png" alt="" width={100} />
-            </Box>
-
-            <Box
-              noValidate
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                height: "100%",
-              }}
-            >
-              <FormPayable />
-            </Box>
-            <Box
-              mb={3}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Navbar />
-            </Box>
-          </Box>
-        </Grid>
+        <LayoutLists
+          title="Page bills"
+          listCards={listCards}
+          icons={<AttachMoneyOutlinedIcon sx={{ fontSize: 48 }} />}
+          colorBackgroundCard="#21a179"
+          titleCard="Controle de contas"
+          contentCard="Próximo vencimento: conta de luz 10 de dezembro"
+        ></LayoutLists>
       </Grid>
     </ThemeProvider>
   );

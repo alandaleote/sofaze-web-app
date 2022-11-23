@@ -1,11 +1,10 @@
 .container-list-cards {
   display: flex;
   flex-direction: row;
-  overflow: auto;
+  overflow-y: hidden;
   justify-content: flex-start;
-
+  gap: 10px;
   width: 100%;
-  padding-left: 1rem;
 }
 
 @media screen and (max-width: 42rem) {
@@ -19,3 +18,10 @@
     max-width: 320px;
   }
 }
+
+.container-box {
+  display: flex;
+  max-width: 100%;
+  width: 100%;
+}
+

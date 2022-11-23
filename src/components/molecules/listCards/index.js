@@ -1,53 +1,65 @@
 import * as React from "react";
 import { Box, Container, Typography } from "@material-ui/core";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import LocalAirportIcon from "@mui/icons-material/LocalAirport";
-import FormatPaintIcon from "@mui/icons-material/FormatPaint";
 
 import Card from "../../atoms/card";
 
 import "./listCards.css";
 
 export default function ListCards(props) {
+  const { listCards = [], subTitle, children } = props;
+
   return (
-    <Container maxWidth="100%" width="100%" padding="5px">
+    <Container
+      component="div"
+      maxWidth="100%"
+      width="100%"
+      overflowX={listCards > 2 ? "auto" : "hidden"}
+      sx={{
+        display: "flex",
+        marginLeft: "0",
+        marginRight: "0",
+        paddingLeft: "0",
+        paddingRight: "0",
+        padding: "0",
+        margin: "0",
+      }}
+    >
       <Box
+        component="div"
         sx={{
           display: "flex",
           flexDirection: "column",
-          padding: "5px",
           width: "100%",
         }}
       >
         <Box
+          component="div"
           sx={{
             display: "flex",
-            margin: "1rem",
-            paddingLeft: "1rem",
+            margin: "1rem 0",
             width: "100%",
           }}
         >
-          <Typography>Listas</Typography>
+          {listCards.length > 0 && <Typography>{subTitle}</Typography>}
         </Box>
 
-        <div className="container-list-cards">
-          <Card
-            title="Supermercado"
-            icons={<ShoppingCartIcon sx={{ fontSize: 32 }} />}
-            color="#ff5864"
-          ></Card>
-
-          <Card
-            title="Mala para viagem"
-            icons={<LocalAirportIcon sx={{ fontSize: 32 }} />}
-            color="#3f88c5"
-          />
-          <Card
-            title="Reparos na casa"
-            icons={<FormatPaintIcon sx={{ fontSize: 32 }} />}
-            color="#ffba06"
-          />
-        </div>
+        {listCards.length > 0 && (
+          <div className="container-list-cards">
+            {listCards.map((card, index) => {
+              return (
+                <Card
+                  key={index}
+                  title={card?.title}
+                  icons={card?.icons}
+                  colorBackground={card?.color}
+                  width={card?.width}
+                  heith={card.heith}
+                />
+              );
+            })}
+          </div>
+        )}
+        {children}
       </Box>
     </Container>
   );

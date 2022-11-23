@@ -1,46 +1,35 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import { Typography } from "@material-ui/core";
+import ChromeReaderModeOutlinedIcon from "@mui/icons-material/ChromeReaderModeOutlined";
+import "./card.css";
 
 export default function Card(props) {
-  const { title = "title", icons, color = "#ff5864", children } = props;
+  const {
+    title = "title",
+    icons = <ChromeReaderModeOutlinedIcon />,
+    colorBackground = "#ff5864",
+    colorText = "#ffffff",
+    width = "164px",
+    height = "107px",
+    children,
+  } = props;
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         display: "flex",
-        flexWrap: "wrap",
-        "& > :not(style)": {
-          m: 1,
-          width: 164,
-          height: 107,
-        },
+        flexDirection: "column",
+        borderRadius: "8px",
+        background: `${colorBackground}`,
+        color: `${colorText}`,
+        minWidth: `${width}`,
+        width: `${width}`,
+        height: `${height}`,
       }}
     >
-      <Paper
-        elevation={3}
-        rounded={true}
-        variant="outlined"
-        sx={{
-          background: color,
-          borderRadius: "8px",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            padding: "1rem",
-            gap: "1rem",
-            background: color,
-          }}
-        >
-          <Box>{icons}</Box>
-          <Typography>{title}</Typography>
-          {children}
-        </Box>
-      </Paper>
-    </Box>
+      <div className="container-card">
+        <div>{icons}</div>
+        <p className="title-card">{title}</p>
+      </div>
+      {children}
+    </div>
   );
 }
