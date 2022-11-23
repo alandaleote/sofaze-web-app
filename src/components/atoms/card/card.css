@@ -1,0 +1,14 @@
+.container-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.title-card {
+  font-size: 12px;
+  line-height: 14px;
+  word-break: normal;
+}

@@ -1,15 +1,41 @@
 import React from "react";
 
-import { CssBaseline, Grid } from "@mui/material";
-
-import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CssBaseline, Grid, Box } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LocalAirportIcon from "@mui/icons-material/LocalAirport";
+import FormatPaintIcon from "@mui/icons-material/FormatPaint";
+
 import Navbar from "../../components/molecules/nav-bar";
 import ListCards from "../../components/molecules/listCards";
 
 const theme = createTheme();
 
-export default function Home() {
+export default function Home(props) {
+  const listCards = [
+    {
+      title: "Supermercado",
+      icons: <ShoppingCartIcon sx={{ fontSize: 32 }} />,
+      color: "#ff5864",
+      width: "164px",
+      height: "107px",
+    },
+    {
+      title: "Mala para viagem",
+      icons: <LocalAirportIcon sx={{ fontSize: 32 }} />,
+      color: "#3f88c5",
+      width: "164px",
+      height: "107px",
+    },
+    {
+      title: "Reparos na casa",
+      icons: <FormatPaintIcon sx={{ fontSize: 32 }} />,
+      color: "#ffba06",
+      width: "164px",
+      height: "107px",
+    },
+  ];
+
   return (
     <ThemeProvider theme={theme}>
       <Grid
@@ -39,11 +65,12 @@ export default function Home() {
             }}
           >
             <img src="/images/logo.png" alt="" />
-            <Box mt={6}>
-              <ListCards />
+            <Box component="div" mt={6} padding="1rem">
+              <ListCards listCards={listCards} subTitle="Listas" />
             </Box>
           </Box>
           <Box
+            component="div"
             mb={3}
             sx={{
               display: "flex",
