@@ -2,16 +2,26 @@ import React from "react";
 import {
   Box,
   Container,
+  IconButton,
   makeStyles,
   Typography,
 } from "@material-ui/core";
 
 import ListCards from "../../molecules/listCards";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import CardLarge from "../../atoms/cardLarge";
 
-
 export default function LayoutLists(props) {
-  const useStyles = makeStyles((theme) => ({
+  const {
+    titleCard,
+    contentCard,
+    colorBackgroundCard,
+    icons,
+    listCards = [],
+    children,
+  } = props;
+
+  const useStyles = makeStyles(() => ({
     container: {
       background:
         "linear-gradient(180deg, #21A179 19.98%, rgba(255, 255, 255, 0) 100%)",
@@ -37,16 +47,21 @@ export default function LayoutLists(props) {
     },
   }));
 
-  const { titleCard, contentCard, colorBackgroundCard, icons, listCards = [], children } = props;
   const classes = useStyles();
+
   const today = new Date();
 
   const day = new Intl.DateTimeFormat("pt-BR", {
     day: "numeric",
   }).format(today);
+
   const month = new Intl.DateTimeFormat("pt-BR", {
     month: "long",
   }).format(today);
+
+  function onGoBack() {
+    window.history.back();
+  }
 
   return (
     <Container className={classes.container}>
@@ -74,6 +89,12 @@ export default function LayoutLists(props) {
             gap: "3rem",
           }}
         >
+          <div style={{ position: "absolute", top: "-5rem", left: "-1rem" }}>
+            <IconButton className={classes.close} onClick={onGoBack}>
+              <ArrowBackOutlinedIcon sx={{ fontSize: 32, color: "#ffffff" }} />
+            </IconButton>
+          </div>
+
           <Typography
             className={classes.typographyTitle}
             variant="h1"

@@ -2,6 +2,14 @@
   --primary-yellow: #ffba06;
   --primary-light-red: #ff5864;
   --primary-blue: #3f88c5;
+  --primary-blue-dark: #0c497a;
   --primary-green: #21a179;
   --secondary-blue: #a6cdd7;
+
+  --blue-background: #5C96C7;
+  --blue-linear-background: linear-gradient(180deg, #3F88C5 19.98%, rgba(255, 255, 255, 0) 100%);
+  --green-linear-background: linear-gradient(180deg, #21A179 19.98%, rgba(255, 255, 255, 0) 100%);
+
+  --yellow-background:"#F5BE2E";
+  --yellow-linear-background: linear-gradient(180deg, #F5BE2E 19.98%, rgba(255, 255, 255, 0) 100%);
 }

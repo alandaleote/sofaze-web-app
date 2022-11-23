@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, makeStyles } from "@material-ui/core";
+import { Box, Button, ListItemAvatar, makeStyles } from "@material-ui/core";
 
 import {
   Divider,
@@ -15,6 +15,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CottageIcon from "@mui/icons-material/Cottage";
 
 import { Link } from "react-router-dom";
 
@@ -36,8 +37,13 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: "none",
-    color: "blue",
+    color: "#1a69aa",
     fontSize: "20px",
+  },
+  listItem: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
   },
   icon: {
     color: "white",
@@ -46,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     display: "flex",
     justifyContent: "flex-end",
+    color: "#ff5864",
   },
 }));
 
@@ -68,23 +75,57 @@ function Navbar() {
                   className={classes.close}
                   onClick={() => setMenuOpen(!menuOpen)}
                 >
-                  <CloseOutlinedIcon />
+                  <CloseOutlinedIcon sx={{ fontSize: 32, color: "#ff5864" }} />
                 </IconButton>
                 <List className={classes.list}>
-                  <ListItem onClick={() => setMenuOpen(false)}>
+                  <ListItem
+                    className={classes.listItem}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <ListItemAvatar>
+                      <CottageIcon
+                        sx={{ fontSize: 32, color: "rgb(63, 136, 197)" }}
+                      />
+                    </ListItemAvatar>
                     <ListItemText>
                       <Link to="/" className={classes.link}>
-                        Home
+                        <span style={{ color: "#0c497a" }}>Home</span>
                       </Link>
                     </ListItemText>
                   </ListItem>
 
                   <Divider />
 
-                  <ListItem onClick={() => setMenuOpen(false)}>
+                  <ListItem
+                    className={classes.listItem}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <ListItemAvatar>
+                    <CheckCircleOutlineOutlinedIcon sx={{ fontSize: 32, color: "#F5BE2E" }} />
+                    </ListItemAvatar>
                     <ListItemText>
                       <Link to="/lista-de-tarefas" className={classes.link}>
-                        Lista de tarefas
+                        <span style={{ color: "#0c497a" }}>
+                          Lista de tarefas
+                        </span>
+                      </Link>
+                    </ListItemText>
+                  </ListItem>
+                  <Divider/>
+                  <ListItem
+                    className={classes.listItem}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <ListItemAvatar>
+                      <AttachMoneyOutlinedIcon
+                        sx={{ fontSize: 32, color: "#21a179" }}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText>
+                      <Link to="/controle-de-contas" className={classes.link}>
+                        <span style={{ color: "#0c497a" }}>
+                          Controle de contas
+                        </span>
                       </Link>
                     </ListItemText>
                   </ListItem>
@@ -92,7 +133,7 @@ function Navbar() {
               </div>
               <Box className={classes.signOut}>
                 <Button onClick={() => signOut(auth)} size="small">
-                  Logout
+                  <span style={{ color: "#0c497a" }}>Logout</span>
                 </Button>
                 <LogoutOutlinedIcon />
               </Box>
@@ -106,8 +147,8 @@ function Navbar() {
             </IconButton>
 
             <IconButton>
-              <Link to="/profile">
-                <CheckCircleOutlineOutlinedIcon sx={{ fontSize: 32 }} />
+              <Link to="/lista-de-tarefas">
+                <CheckCircleOutlineOutlinedIcon sx={{ fontSize: 32, color: "#F5BE2E" }} />
               </Link>
             </IconButton>
 
@@ -119,7 +160,7 @@ function Navbar() {
 
             <IconButton>
               <Link to="/contas">
-                <AttachMoneyOutlinedIcon sx={{ fontSize: 32 }} />
+                <AttachMoneyOutlinedIcon   sx={{ fontSize: 32, color: "#21a179" }} />
               </Link>
             </IconButton>
 
