@@ -5,6 +5,7 @@ import { IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import "./layout.css";
+import { Link } from "react-router-dom";
 
 export default function Layout(props) {
   const {
@@ -12,11 +13,11 @@ export default function Layout(props) {
     backgroudGradient,
     colorButton,
     list = [],
-    onClickAdd,
+    link,
     children,
   } = props;
 
-  console.log(list)
+  console.log(list);
 
   const useStyles = makeStyles(() => ({
     container: {
@@ -75,6 +76,7 @@ export default function Layout(props) {
           <IconButton className={classes.close} onClick={onGoBack}>
             <ArrowBackOutlinedIcon sx={{ fontSize: 32, color: "#ffffff" }} />
           </IconButton>
+
           <Typography
             className={classes.typographyTitle}
             variant="h1"
@@ -99,11 +101,17 @@ export default function Layout(props) {
           }}
         >
           {children}
-          <div className="button-add">
-            <IconButton onClick={onClickAdd}>
-              <AddCircleIcon sx={{ fontSize: 70, color: `${colorButton}` }} />
-            </IconButton>
-          </div>
+          {link && (
+            <div className="button-add">
+              <IconButton>
+                <Link to={link}>
+                  <AddCircleIcon
+                    sx={{ fontSize: 70, color: `${colorButton}` }}
+                  />
+                </Link>
+              </IconButton>
+            </div>
+          )}
         </Box>
       </Box>
     </Container>

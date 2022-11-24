@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,6 +18,7 @@ import RecoverPassword from "./pages/recover-password";
 import Bills from "./pages/bills";
 import ListTasks from "./pages/listTasks";
 import ListBills from "./pages/listBills";
+import AddTasks from "./pages/addTasks";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -50,6 +51,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route exact path="/" element={<AddTasks />} />
           <Route
             exact
             path="/controle-de-contas"
@@ -69,7 +71,7 @@ function App() {
             }
           />
           <Route
-            path="/"
+            path="/home"
             element={
               <PrivateRoute>
                 <Home />
@@ -104,4 +106,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);

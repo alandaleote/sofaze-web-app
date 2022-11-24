@@ -2,9 +2,11 @@ import React from "react";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CssBaseline, Grid, Box } from "@mui/material";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import LocalAirportIcon from "@mui/icons-material/LocalAirport";
-import FormatPaintIcon from "@mui/icons-material/FormatPaint";
+//import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+//import LocalAirportIcon from "@mui/icons-material/LocalAirport";
+//import FormatPaintIcon from "@mui/icons-material/FormatPaint";
+import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
 import Navbar from "../../components/molecules/nav-bar";
 import ListCards from "../../components/molecules/listCards";
@@ -13,24 +15,38 @@ const theme = createTheme();
 
 export default function Home(props) {
   const listCards = [
+    // {
+    //   title: "Supermercado",
+    //   icons: <ShoppingCartIcon sx={{ fontSize: 32 }} />,
+    //   color: "#ff5864",
+    //   width: "164px",
+    //   height: "107px",
+    // },
+    // {
+    //   title: "Mala para viagem",
+    //   icons: <LocalAirportIcon sx={{ fontSize: 32 }} />,
+    //   color: "#3f88c5",
+    //   width: "164px",
+    //   height: "107px",
+    // },
+    // {
+    //   title: "Reparos na casa",
+    //   icons: <FormatPaintIcon sx={{ fontSize: 32 }} />,
+    //   color: "#ffba06",
+    //   width: "164px",
+    //   height: "107px",
+    // },
     {
-      title: "Supermercado",
-      icons: <ShoppingCartIcon sx={{ fontSize: 32 }} />,
-      color: "#ff5864",
-      width: "164px",
-      height: "107px",
-    },
-    {
-      title: "Mala para viagem",
-      icons: <LocalAirportIcon sx={{ fontSize: 32 }} />,
-      color: "#3f88c5",
-      width: "164px",
-      height: "107px",
-    },
-    {
-      title: "Reparos na casa",
-      icons: <FormatPaintIcon sx={{ fontSize: 32 }} />,
+      title: "Tarefas",
+      icons: <CheckCircleOutlineOutlinedIcon sx={{ fontSize: 32 }} />,
       color: "#ffba06",
+      width: "164px",
+      height: "107px",
+    },
+    {
+      title: "Contas",
+      icons: <AttachMoneyOutlinedIcon sx={{ fontSize: 32 }} />,
+      color: "#21A179",
       width: "164px",
       height: "107px",
     },
