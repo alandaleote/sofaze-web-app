@@ -35,7 +35,7 @@ function App() {
         <Routes>
           <Route
             exact
-            path="/profile"
+            path="/configuracoes"
             element={
               <PrivateRoute>
                 <Profile />

@@ -1,29 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Alert,
-  Box,
-  Button,
-  FormControl,
-  Modal,
-  Select,
-  TextField,
-} from "@mui/material";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { Alert, Box, Button, Modal, TextField } from "@mui/material";
 import { db } from "../../../firebase/firebase.config";
-import { collection, onSnapshot, addDoc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { Grid } from "@material-ui/core";
-import formatDate from "../../../utils/functions";
-import "./formAddTask.css";
-
-const useStyles = makeStyles((theme) => ({
-  span: {
-    fontSize: "10px",
-  },
-  select: {
-    background: "white",
-  },
-}));
+import "./formAddUser.css";
 
 const style = {
   position: "absolute",
@@ -39,50 +19,49 @@ const style = {
   pb: 3,
 };
 
-export default function FormAddTasks(props) {
-  const classes = useStyles();
-  const navigate = useNavigate();
+export default function FormAddUsers(props) {
+  const { listUsers = [] } = props;
 
-  const [listUsers, setListUsers] = useState([]);
   const [messageError, setMessageError] = useState(null);
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [user, setUser] = useState({ user_id: "", user_name: "" });
-  const [titleTask, setTitleTask] = useState("");
-  const [descriptionTask, setDescriptionTask] = useState("");
-  const [dateEnd, setDateEnd] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [email, setEmail] = useState("");
+  const [filteredEmail, setFilteredEmail] = useState("");
+
+  function filterEmailUser(value) {
+    if (value?.email === email) return value;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await addDoc(collection(db, "Task"), {
-        title: titleTask,
-        description: descriptionTask,
-        completed: false,
-        created: Timestamp.now(),
-        date_end: formatDate(dateEnd),
-        user_id: user.user_id,
-        user_name: user.user_name,
-      });
-      setMessageSuccess("Formulário enviado com sucesso!");
-      setState("submiting");
-      setOpen(true);
-    } catch (err) {
-      setMessageError("Erro ao enviar o formulário. Tente novamente!");
+
+    listUsers.length > 0 && setFilteredEmail(listUsers.filter(filterEmailUser));
+
+    if (filteredEmail?.[0]?.email !== email) {
+      try {
+        await addDoc(collection(db, "Users"), {
+          name: name,
+          email: email,
+          description: description,
+          created: Timestamp.now(),
+        });
+        setMessageSuccess("Formulário enviado com sucesso!");
+        setState("submiting");
+        setOpen(true);
+      } catch (err) {
+        setMessageError("Erro ao enviar o formulário. Tente novamente!");
+        setOpen(true);
+        setState("submiting");
+      }
+    } else {
+      setMessageError("Email já cadastrado. Tente outro!");
       setOpen(true);
       setState("submiting");
     }
   };
-
-  useEffect(() => {
-    onSnapshot(collection(db, "Users"), (snapshot) => {
-      const filterUsers = snapshot?.docs?.map((doc) => {
-        return { ...doc?.data(), id: doc?.id };
-      });
-      setListUsers(filterUsers);
-    });
-  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -96,7 +75,6 @@ export default function FormAddTasks(props) {
 
   const handleGoHome = () => {
     setState("default");
-    navigate("/");
   };
 
   return (
@@ -169,51 +147,15 @@ export default function FormAddTasks(props) {
       {state === "default" && (
         <form className="container-form-tasks">
           <div className="container-inputs">
-            <FormControl fullWidth>
-              <span className={classes.span} id="demo-simple-select-label">
-                Usuários
-              </span>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                fullWidth
-                native
-              >
-                {listUsers.length > 0 &&
-                  listUsers?.map((user, index) => {
-                    return (
-                      <option
-                        key={index}
-                        value={user.id}
-                        name={user.name}
-                        onClick={(e) =>
-                          setUser({
-                            user_id: e.target.value,
-                            user_name: user.name,
-                          })
-                        }
-                        onChange={(e) =>
-                          setUser({
-                            user_id: e.target.value,
-                            user_name: user.name,
-                          })
-                        }
-                      >
-                        {user.name}
-                      </option>
-                    );
-                  })}
-              </Select>
-            </FormControl>
             <TextField
               margin="normal"
               required
               fullWidth
-              id="title"
-              label="Nome da tarefa"
-              name="title"
-              onChange={(e) => setTitleTask(e.target.value)}
-              value={titleTask && titleTask}
+              id="name"
+              label="Nome"
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+              value={name && name}
               autoFocus
             />
             <TextField
@@ -221,32 +163,31 @@ export default function FormAddTasks(props) {
               required
               fullWidth
               id="description"
-              label="Descrição da tarefa"
+              label="Descrição"
               name="description"
-              onChange={(e) => setDescriptionTask(e.target.value)}
-              value={descriptionTask && descriptionTask}
+              onChange={(e) => setDescription(e.target.value)}
+              value={description && description}
               autoFocus
             />
-
-            <div className="input-date">
-              <label>Data final:</label>
-              <input
-                id="date"
-                required
-                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-                onChange={(e) => setDateEnd(e.target.value)}
-                type="date"
-                className="form-control"
-                value={dateEnd && dateEnd}
-              />
-            </div>
+            <TextField
+              margin="normal"
+              type="email"
+              required
+              fullWidth
+              id="email"
+              label="E-mail"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email && email}
+              autoFocus
+            />
           </div>
 
           <Button
             className="button-entry"
             type="button"
             onClick={handleSubmit}
-            disabled={titleTask === "" || descriptionTask === ""}
+            disabled={name === "" || email === "" || description === ""}
             fullWidth
             variant="contained"
             color="success"
