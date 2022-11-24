@@ -14,6 +14,7 @@ export default function Task(props) {
     name = "",
     description = "",
     date = "",
+    dateLabel="",
     id = "",
     title = "",
     completed,
@@ -61,7 +62,7 @@ export default function Task(props) {
             <div className="container-content">
               <span className="name">{name && name}</span>
               <span className="description">{description && description}</span>
-              <span className="date">{date && date}</span>
+              <span className="date">{dateLabel}{date && date}</span>
             </div>
           </div>
           <div className="container-actions">

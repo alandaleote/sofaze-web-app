@@ -97,6 +97,7 @@ export default function ListTasks() {
                       id={task?.id}
                       title={task?.data?.title}
                       completed={task?.data?.completed}
+                      dateLabel="Recorrente - hoje: "
                     />
                   );
                 })}
@@ -115,43 +116,10 @@ export default function ListTasks() {
                       id={task?.id}
                       title={task?.data?.title}
                       completed={task?.data?.completed}
+                      dateLabel="Recorrente - próximo: "
                     />
                   );
                 })}
-
-              {/* {tasks.length > 0 ? (
-              tasks.map((task, index) => {
-                return (
-                  <Task
-                    key={index}
-                    name={task?.data?.user_name}
-                    description={task?.data?.description}
-                    date={task?.data?.date_end}
-                    id={task?.id}
-                    title={task?.data?.title}
-                    completed={task?.data?.completed}
-                  />
-                );
-              })
-            ) : (
-              <div className="tasks-empty">
-                <Alert
-                  fullWidth
-                  severity="warning"
-                  sx={{
-                    width: "100%",
-                    height: "auto",
-                    display: "flex",
-                    alignItems: "baseline",
-                    justifyContent: "center",
-                    padding: "0 15px",
-                    fontSize: "12px",
-                  }}
-                >
-                  <p>Nenhuma tarefa cadastrada</p>
-                </Alert>
-              </div>
-            )} */}
             </div>
           ) : (
             <div className="tasks-empty">

@@ -1,0 +1,24 @@
+.container-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+.container-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+.container-actions {
+  display: flex;
+}
+.container-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.button-edit {
+  font-size: 12px;
+}

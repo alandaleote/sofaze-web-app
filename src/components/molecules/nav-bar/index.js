@@ -153,7 +153,7 @@ function Navbar() {
             </IconButton>
 
             <IconButton>
-              <Link to="/profile">
+              <Link to="/configuracoes">
                 <AddCircleIcon sx={{ fontSize: 50 }} />
               </Link>
             </IconButton>
@@ -165,7 +165,7 @@ function Navbar() {
             </IconButton>
 
             <IconButton>
-              <Link to="/profile">
+              <Link to="/configuracoes">
                 <SettingsOutlinedIcon sx={{ fontSize: 32 }} />
               </Link>
             </IconButton>
