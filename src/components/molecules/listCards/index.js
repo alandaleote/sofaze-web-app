@@ -4,6 +4,7 @@ import { Box, Container, Typography } from "@material-ui/core";
 import Card from "../../atoms/card";
 
 import "./listCards.css";
+import { Link } from "react-router-dom";
 
 export default function ListCards(props) {
   const { listCards = [], subTitle, children } = props;
@@ -47,14 +48,16 @@ export default function ListCards(props) {
           <div className="container-list-cards">
             {listCards.map((card, index) => {
               return (
-                <Card
-                  key={index}
-                  title={card?.title}
-                  icons={card?.icons}
-                  colorBackground={card?.color}
-                  width={card?.width}
-                  heith={card.heith}
-                />
+                <Link className="link-card" to={card?.link}>
+                  <Card
+                    key={index}
+                    title={card?.title}
+                    icons={card?.icons}
+                    colorBackground={card?.color}
+                    width={card?.width}
+                    heith={card.heith}
+                  />
+                </Link>
               );
             })}
           </div>
