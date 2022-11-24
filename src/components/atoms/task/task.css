@@ -1,8 +1,17 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
 .container-task {
   display: flex;
   align-items: center;
   gap: 16px;
   width: 100%;
+}
+.container-actions {
+  display: flex;
 }
 .name {
   font-size: 16px;
@@ -30,4 +39,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+}
+.button-edit {
+  font-size: 12px;
 }

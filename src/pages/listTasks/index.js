@@ -28,8 +28,6 @@ export default function ListTasks() {
     });
   }, []);
 
-  console.log(tasks);
-
   return (
     <ThemeProvider theme={theme}>
       <Grid
@@ -55,11 +53,12 @@ export default function ListTasks() {
                     name={task?.data?.user_name}
                     description={task?.data?.description}
                     date={task?.data?.date_end}
+                    id={task?.id}
+                    title={task?.date?.title}
                   />
                 );
               })}
           </div>
-          ;
         </Layout>
       </Grid>
     </ThemeProvider>

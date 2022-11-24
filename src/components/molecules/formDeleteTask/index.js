@@ -43,15 +43,12 @@ export default function FormAddTasks(props) {
   const classes = useStyles();
   const navigate = useNavigate();
 
-  //const [listCategory, setListCategory] = useState([]);
-  //const [category, setCategory] = useState("");
-
   const [listUsers, setListUsers] = useState([]);
   const [messageError, setMessageError] = useState(null);
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [user, setUser] = useState({ user_id: "", user_name: ""});
+  const [user, setUser] = useState({ user_id: "", user_name: "" });
   const [titleTask, setTitleTask] = useState("");
   const [descriptionTask, setDescriptionTask] = useState("");
   const [dateEnd, setDateEnd] = useState("");
@@ -65,8 +62,8 @@ export default function FormAddTasks(props) {
         completed: false,
         created: Timestamp.now(),
         date_end: formatDate(dateEnd),
-        user_id: user.user_id === "" && listUsers?.[0].id,
-        user_name: user.user_name === "" && listUsers?.[0].name,
+        user_id: user.user_id,
+        user_name: user.user_name,
       });
       setMessageSuccess("Formulário enviado com sucesso!");
       setState("submiting");
@@ -101,25 +98,6 @@ export default function FormAddTasks(props) {
     setState("default");
     navigate("/");
   };
-
-  // const handleChange = (event) => {
-  //   const value = event.target.value;
-  //   setCategory(value);
-  // };
-
-  // const handleClick = (event) => {
-  //   setCategory(event.target.value);
-  // };
-
-  // useEffect(() => {
-  //   onSnapshot(collection(db, "CategoryTask"), (snapshot) => {
-  //     const filterCategory = snapshot?.docs?.map((doc) => {
-  //       return { ...doc?.data(), id: doc?.id };
-  //     });
-  //     setListCategory(filterCategory);
-  //     console.log(filterCategory);
-  //   });
-  // }, []);
 
   return (
     <>
@@ -191,33 +169,6 @@ export default function FormAddTasks(props) {
       {state === "default" && (
         <form className="container-form-tasks">
           <div className="container-inputs">
-            {/* <FormControl fullWidth>
-          <span className={classes.span} id="demo-simple-select-label">
-            Categorias
-          </span>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            fullWidth
-            native
-            value={category}
-            onChange={handleChange}
-          >
-            {listCategory.length > 0 &&
-              listCategory?.map((category, index) => {
-                return (
-                  <option
-                    key={index}
-                    value={category?.id}
-                    name={category.title}
-                    onClick={handleClick}
-                  >
-                    {category.title}
-                  </option>
-                );
-              })}
-          </Select>
-        </FormControl> */}
             <FormControl fullWidth>
               <span className={classes.span} id="demo-simple-select-label">
                 Usuários
