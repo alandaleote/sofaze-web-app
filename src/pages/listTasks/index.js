@@ -47,6 +47,7 @@ export default function ListTasks() {
           <div className="container-layout-tasks">
             {tasks &&
               tasks.map((task, index) => {
+                console.log(task)
                 return (
                   <Task
                     key={index}
@@ -54,7 +55,8 @@ export default function ListTasks() {
                     description={task?.data?.description}
                     date={task?.data?.date_end}
                     id={task?.id}
-                    title={task?.date?.title}
+                    title={task?.data?.title}
+                    completed={task?.data?.completed}
                   />
                 );
               })}
