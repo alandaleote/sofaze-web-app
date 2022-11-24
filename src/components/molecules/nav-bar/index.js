@@ -65,7 +65,7 @@ function Navbar() {
   }
 
   return (
-    <div className={menuOpen ? "container" : "container-wrapper"}>
+    <div className={menuOpen ? "container-nav-wrapper" : "container-wrapper"}>
       <div className={!menuOpen ? "header-nav-container" : "header-nav-open"}>
         <div className="navbar-container">
           {menuOpen ? (

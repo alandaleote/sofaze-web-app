@@ -66,7 +66,11 @@ function Profile() {
 
         <Layout
           title="Configurações"
-          backgroudGradient=" linear-gradient(180deg, #F5BE2E 19.98%, rgba(255, 255, 255, 0) 100%); linear-gradient(180deg, #F5BE2E 19.98%, rgba(255, 255, 255, 0) 100%);"
+          backgroudGradient="linear-gradient(
+            180deg,
+            #3f88c5 19.98%,
+            rgba(255, 255, 255, 0) 100%
+          );"
           colorButton="#3f88c5"
         >
           {state === "default" && (
