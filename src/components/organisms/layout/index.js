@@ -20,7 +20,7 @@ export default function Layout(props) {
   console.log(list);
 
   const useStyles = makeStyles(() => ({
-    container: {
+    containerLayout: {
       background: backgroudGradient
         ? `${backgroudGradient}`
         : "linear-gradient(180deg, #21A179 19.98%, rgba(255, 255, 255, 0) 100%)",
@@ -47,7 +47,7 @@ export default function Layout(props) {
   }
 
   return (
-    <Container className={classes.container}>
+    <Container className={classes.containerLayout}>
       <Box
         component="div"
         sx={{

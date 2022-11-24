@@ -34,8 +34,6 @@ export default function SelectedCategories(props) {
     setCategory(event.target.value);
   };
 
-  console.log(category);
-
   return (
     <div>
       <FormControl variant="outlined" className={classes.formControl}>

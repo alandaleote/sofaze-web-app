@@ -1,12 +1,18 @@
-.teste {
-  justify-content: space-between;
-}
 .button-add {
-  position: absolute;
+  position:static;
   display: flex;
   justify-content: flex-end;
   width: 100%;
   height: auto;
-  bottom: 3rem;
-  right: 2rem;
+}
+@media screen and (max-width: 40rem) {
+  .button-add {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: auto;
+    bottom: 3rem;
+    right: 2rem;
+  }
 }

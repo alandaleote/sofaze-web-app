@@ -17,6 +17,7 @@ import { collection, onSnapshot, addDoc, Timestamp } from "firebase/firestore";
 
 import "./formAddTasks.css";
 import { Grid } from "@material-ui/core";
+import formatDate from "../../../utils/functions";
 
 const useStyles = makeStyles((theme) => ({
   span: {
@@ -53,7 +54,7 @@ export default function FormAddTasks(props) {
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [userId, setUserId] = useState("");
+  const [user, setUser] = useState({ user_id: "", user_name: "" });
   const [titleTask, setTitleTask] = useState("");
   const [descriptionTask, setDescriptionTask] = useState("");
   const [dateEnd, setDateEnd] = useState("");
@@ -66,8 +67,9 @@ export default function FormAddTasks(props) {
         description: descriptionTask,
         completed: false,
         created: Timestamp.now(),
-        date_end: dateEnd,
-        user_id: userId,
+        date_end: formatDate(dateEnd),
+        user_id: user.user_id,
+        user_name: user.user_name,
       });
       setMessageSuccess("Formulário enviado com sucesso!");
       setState("submiting");
@@ -85,12 +87,12 @@ export default function FormAddTasks(props) {
         return { ...doc?.data(), id: doc?.id };
       });
       setListUsers(filterUsers);
-      console.log(filterUsers);
     });
   }, []);
 
   const handleClose = () => {
     setOpen(false);
+    setState("default");
   };
 
   const handleGoBackForm = () => {
@@ -133,7 +135,7 @@ export default function FormAddTasks(props) {
         >
           <Box sx={{ ...style, width: 400 }}>
             <Grid container mb="10px">
-              {messageError && (
+              {messageError ? (
                 <Alert
                   fullWidth
                   severity="error"
@@ -152,26 +154,24 @@ export default function FormAddTasks(props) {
                     {messageError} &#128580;
                   </p>
                 </Alert>
-              )}
-              {messageSuccess && (
-                <Alert
-                  fullWidth
-                  severity="success"
-                  sx={{
-                    width: "100%",
-                    height: "auto",
-                    display: "flex",
-                    alignItems: "baseline",
-                    justifyContent: "center",
-                    padding: "0 15px",
-                    fontSize: "12px",
-                  }}
-                >
-                  <p>
-                    <strong>Ops! </strong>
-                    {messageSuccess}
-                  </p>
-                </Alert>
+              ) : (
+                messageSuccess && (
+                  <Alert
+                    fullWidth
+                    severity="success"
+                    sx={{
+                      width: "100%",
+                      height: "auto",
+                      display: "flex",
+                      alignItems: "baseline",
+                      justifyContent: "center",
+                      padding: "0 15px",
+                      fontSize: "12px",
+                    }}
+                  >
+                    <p>{messageSuccess}</p>
+                  </Alert>
+                )
               )}
             </Grid>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -230,17 +230,26 @@ export default function FormAddTasks(props) {
                 id="demo-simple-select"
                 fullWidth
                 native
-                onChange={(e) => setUserId(e.target.value)}
-                value={userId && userId}
               >
                 {listUsers.length > 0 &&
                   listUsers?.map((user, index) => {
                     return (
                       <option
                         key={index}
-                        value={user?.id}
+                        value={user.id}
                         name={user.name}
-                        onClick={(e) => setUserId(e.target.value)}
+                        onClick={(e) =>
+                          setUser({
+                            user_id: e.target.value,
+                            user_name: user.name,
+                          })
+                        }
+                        onChange={(e) =>
+                          setUser({
+                            user_id: e.target.value,
+                            user_name: user.name,
+                          })
+                        }
                       >
                         {user.name}
                       </option>
@@ -274,7 +283,9 @@ export default function FormAddTasks(props) {
             <div className="input-date">
               <label>Data final:</label>
               <input
+                id="date"
                 required
+                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
                 onChange={(e) => setDateEnd(e.target.value)}
                 type="date"
                 className="form-control"
@@ -287,7 +298,7 @@ export default function FormAddTasks(props) {
             className="button-entry"
             type="button"
             onClick={handleSubmit}
-            disabled={false}
+            disabled={titleTask === "" || descriptionTask === ""}
             fullWidth
             variant="contained"
             color="success"
