@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { IconButton } from "@mui/material";
+import { Checkbox, IconButton } from "@mui/material";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
@@ -22,21 +22,25 @@ export default function Task(props) {
   const [checked, setChecked] = React.useState(completed);
   const [state, setState] = useState("defaultForm");
 
-  const handleChange = async () => {
-    const taskDocRef = doc(db, "tasks", id);
-    try {
-      await updateDoc(taskDocRef, {
-        completed: checked,
-      });
-    } catch (err) {
-      alert(err);
+  const handleChange = async (event) => {
+    setChecked(event.target.checked);
+    if (event.target.checked !== completed) {
+      const taskDocReff = doc(db, "Task", id);
+
+      try {
+        await updateDoc(taskDocReff, {
+          completed: event.target.checked,
+        });
+      } catch (err) {
+        alert(err);
+      }
     }
   };
 
   const handleDelete = async () => {
-    const taskDocRef = doc(db, "tasks", id);
+    const taskDocRefDelete = doc(db, "Task", id);
     try {
-      await deleteDoc(taskDocRef);
+      await deleteDoc(taskDocRefDelete);
     } catch (err) {
       alert(err);
     }
@@ -47,18 +51,12 @@ export default function Task(props) {
       {state === "defaultForm" && (
         <div className="container">
           <div className="container-task">
-            <label
-              htmlFor={`checkbox-${id}`}
-              className="checkbox-custom-label"
-              onClick={() => setChecked(!checked)}
-            ></label>
-            <input
-              id={`checkbox-${id}`}
-              className="checkbox-custom"
-              name="checkbox"
+            <Checkbox
               checked={checked}
               onChange={handleChange}
-              type="checkbox"
+              onClick={() => setChecked(!checked)}
+              color="success"
+              inputProps={{ "aria-label": "controlled" }}
             />
             <div className="container-content">
               <span className="name">{name && name}</span>
