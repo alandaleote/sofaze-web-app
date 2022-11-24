@@ -14,14 +14,14 @@ export default function Task(props) {
     name = "",
     description = "",
     date = "",
-    dateLabel="",
+    dateLabel = "",
     id = "",
     title = "",
     completed,
   } = props;
 
   const [checked, setChecked] = React.useState(completed);
-  const [state, setState] = useState("defaultForm");
+  const [stateTasks, setStateTasks] = useState("defaultForm");
 
   const handleChange = async (event) => {
     setChecked(event.target.checked);
@@ -38,6 +38,10 @@ export default function Task(props) {
     }
   };
 
+  function handleClick() {
+    setStateTasks("updateTask");
+  }
+
   const handleDelete = async () => {
     const taskDocRefDelete = doc(db, "Task", id);
     try {
@@ -49,7 +53,7 @@ export default function Task(props) {
 
   return (
     <>
-      {state === "defaultForm" && (
+      {stateTasks === "defaultForm" && (
         <div className="container-box-tasks">
           <div className="container-task">
             <Checkbox
@@ -62,11 +66,14 @@ export default function Task(props) {
             <div className="container-content">
               <span className="name">{name && name}</span>
               <span className="description">{description && description}</span>
-              <span className="date">{dateLabel}{date && date}</span>
+              <span className="date">
+                {dateLabel}
+                {date && date}
+              </span>
             </div>
           </div>
           <div className="container-actions">
-            <IconButton onClick={() => setState("update")}>
+            <IconButton onClick={handleClick}>
               <ModeEditOutlineOutlinedIcon
                 sx={{ fontSize: 24, color: "#f7971b" }}
               />
@@ -79,7 +86,7 @@ export default function Task(props) {
           </div>
         </div>
       )}
-      {state === "update" && (
+      {stateTasks === "updateTask" && (
         <FormUpdateTask
           toEditName={name}
           toEditDescription={description}

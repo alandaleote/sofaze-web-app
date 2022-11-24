@@ -48,8 +48,6 @@ function Profile() {
     setState("updateUsers");
   }
 
-  console.log(listUsers);
-
   const handleGoBackForm = () => {
     setState("default");
   };
@@ -222,7 +220,6 @@ function Profile() {
                 <h2>Usuários cadastrados</h2>
 
                 {listUsers?.map((user, index) => {
-                  console.log(user);
                   return (
                     <>
                       <Divider />

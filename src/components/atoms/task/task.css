@@ -12,6 +12,7 @@
 }
 .container-actions {
   display: flex;
+  gap: 1rem;
 }
 .name {
   font-size: 16px;

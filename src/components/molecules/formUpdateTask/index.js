@@ -177,7 +177,7 @@ export default function FormUpdateTask(props) {
         </Modal>
       )}
       {state === "default" && (
-        <form className="container-form-tasks">
+        <form className="container-form-tasks-update">
           <div className="container-inputs">
             <FormControl fullWidth>
               <span className={classes.span} id="demo-simple-select-label">
