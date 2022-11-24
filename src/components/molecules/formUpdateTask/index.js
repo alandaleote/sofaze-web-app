@@ -11,10 +11,10 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import { db } from "../../../firebase/firebase.config";
-import { collection, onSnapshot, addDoc, Timestamp } from "firebase/firestore";
+import { doc, updateDoc, collection, onSnapshot } from "firebase/firestore";
 import { Grid } from "@material-ui/core";
 import formatDate from "../../../utils/functions";
-import "./formAddTask.css";
+import "./formUpdateTask.css";
 
 const useStyles = makeStyles((theme) => ({
   span: {
@@ -39,40 +39,37 @@ const style = {
   pb: 3,
 };
 
-export default function FormAddTasks(props) {
+export default function FormUpdateTask(props) {
+  const { id, toEditTitle, toEditDescription, toEditName, toEditDate } = props;
+
   const classes = useStyles();
   const navigate = useNavigate();
-
-  //const [listCategory, setListCategory] = useState([]);
-  //const [category, setCategory] = useState("");
 
   const [listUsers, setListUsers] = useState([]);
   const [messageError, setMessageError] = useState(null);
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [user, setUser] = useState({ user_id: "", user_name: ""});
-  const [titleTask, setTitleTask] = useState("");
-  const [descriptionTask, setDescriptionTask] = useState("");
-  const [dateEnd, setDateEnd] = useState("");
+  const [user, setUser] = useState(toEditName);
+  const [titleTask, setTitleTask] = useState(toEditTitle);
+  const [descriptionTask, setDescriptionTask] = useState(toEditDescription);
+  const [dateEnd, setDateEnd] = useState(toEditDate);
 
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
+    const taskDocRef = doc(db, "Task", id);
     try {
-      await addDoc(collection(db, "Task"), {
+      await updateDoc(taskDocRef, {
         title: titleTask,
         description: descriptionTask,
-        completed: false,
-        created: Timestamp.now(),
         date_end: formatDate(dateEnd),
-        user_id: user.user_id === "" && listUsers?.[0].id,
-        user_name: user.user_name === "" && listUsers?.[0].name,
+        user_name: user,
       });
-      setMessageSuccess("Formulário enviado com sucesso!");
+      setMessageSuccess("Dados atualizados com sucesso!");
       setState("submiting");
       setOpen(true);
     } catch (err) {
-      setMessageError("Erro ao enviar o formulário. Tente novamente!");
+      setMessageError("Erro ao editar os dados. Tente novamente!");
       setOpen(true);
       setState("submiting");
     }
@@ -101,25 +98,6 @@ export default function FormAddTasks(props) {
     setState("default");
     navigate("/");
   };
-
-  // const handleChange = (event) => {
-  //   const value = event.target.value;
-  //   setCategory(value);
-  // };
-
-  // const handleClick = (event) => {
-  //   setCategory(event.target.value);
-  // };
-
-  // useEffect(() => {
-  //   onSnapshot(collection(db, "CategoryTask"), (snapshot) => {
-  //     const filterCategory = snapshot?.docs?.map((doc) => {
-  //       return { ...doc?.data(), id: doc?.id };
-  //     });
-  //     setListCategory(filterCategory);
-  //     console.log(filterCategory);
-  //   });
-  // }, []);
 
   return (
     <>
@@ -172,17 +150,27 @@ export default function FormAddTasks(props) {
               )}
             </Grid>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              {messageError && (
+                <Button
+                  sx={{
+                    fontSize: "12px",
+                    textTransform: "none",
+                    margin: "5px",
+                  }}
+                  onClick={handleGoBackForm}
+                >
+                  Voltar para o formulário
+                </Button>
+              )}
               <Button
-                sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
-                onClick={handleGoBackForm}
-              >
-                Voltar para o formulaŕio
-              </Button>
-              <Button
-                sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
+                sx={{
+                  fontSize: "12px",
+                  textTransform: "none",
+                  margin: "5px",
+                }}
                 onClick={handleGoHome}
               >
-                Voltar para a Home
+                Ir para Home
               </Button>
             </Box>
           </Box>
@@ -191,33 +179,6 @@ export default function FormAddTasks(props) {
       {state === "default" && (
         <form className="container-form-tasks">
           <div className="container-inputs">
-            {/* <FormControl fullWidth>
-          <span className={classes.span} id="demo-simple-select-label">
-            Categorias
-          </span>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            fullWidth
-            native
-            value={category}
-            onChange={handleChange}
-          >
-            {listCategory.length > 0 &&
-              listCategory?.map((category, index) => {
-                return (
-                  <option
-                    key={index}
-                    value={category?.id}
-                    name={category.title}
-                    onClick={handleClick}
-                  >
-                    {category.title}
-                  </option>
-                );
-              })}
-          </Select>
-        </FormControl> */}
             <FormControl fullWidth>
               <span className={classes.span} id="demo-simple-select-label">
                 Usuários
@@ -235,18 +196,8 @@ export default function FormAddTasks(props) {
                         key={index}
                         value={user.id}
                         name={user.name}
-                        onClick={(e) =>
-                          setUser({
-                            user_id: e.target.value,
-                            user_name: user.name,
-                          })
-                        }
-                        onChange={(e) =>
-                          setUser({
-                            user_id: e.target.value,
-                            user_name: user.name,
-                          })
-                        }
+                        onClick={(e) => setUser(user.name)}
+                        onChange={(e) => setUser(user.name)}
                       >
                         {user.name}
                       </option>
@@ -294,14 +245,13 @@ export default function FormAddTasks(props) {
           <Button
             className="button-entry"
             type="button"
-            onClick={handleSubmit}
-            disabled={titleTask === "" || descriptionTask === ""}
+            onClick={handleUpdate}
             fullWidth
             variant="contained"
             color="success"
             sx={{ mt: 3, mb: 3, background: "#21a179" }}
           >
-            Enviar
+            Editar
           </Button>
         </form>
       )}
