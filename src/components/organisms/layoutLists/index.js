@@ -22,7 +22,7 @@ export default function LayoutLists(props) {
   } = props;
 
   const useStyles = makeStyles(() => ({
-    container: {
+    containerLayoutLists: {
       background:
         "linear-gradient(180deg, #21A179 19.98%, rgba(255, 255, 255, 0) 100%)",
       maxWidth: "100%",
@@ -64,7 +64,7 @@ export default function LayoutLists(props) {
   }
 
   return (
-    <Container className={classes.container}>
+    <Container className={classes.containerLayoutLists}>
       <Box
         component="div"
         sx={{

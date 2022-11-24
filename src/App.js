@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -51,7 +51,15 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route exact path="/" element={<AddTasks />} />
+          <Route
+            exact
+            path="/adicionar-tarefas"
+            element={
+              <PrivateRoute>
+                <AddTasks />
+              </PrivateRoute>
+            }
+          />
           <Route
             exact
             path="/controle-de-contas"
@@ -71,7 +79,7 @@ function App() {
             }
           />
           <Route
-            path="/home"
+            path="/"
             element={
               <PrivateRoute>
                 <Home />
@@ -106,4 +114,4 @@ function App() {
   );
 }
 
-export default memo(App);
+export default App;
