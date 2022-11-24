@@ -6,7 +6,7 @@
   height: auto;
 }
 @media screen and (max-width: 40rem) {
-  .button-add {
+  /* .button-add {
     position: absolute;
     display: flex;
     justify-content: flex-end;
@@ -14,5 +14,5 @@
     height: auto;
     bottom: 3rem;
     right: 2rem;
-  }
+  } */
 }

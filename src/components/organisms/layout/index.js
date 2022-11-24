@@ -100,7 +100,6 @@ export default function Layout(props) {
             borderRadius: "30px 30px 0px 0px",
           }}
         >
-          {children}
           {link && (
             <div className="button-add">
               <IconButton>
@@ -112,6 +111,7 @@ export default function Layout(props) {
               </IconButton>
             </div>
           )}
+          {children}
         </Box>
       </Box>
     </Container>

@@ -38,9 +38,9 @@ export default function Task(props) {
   };
 
   const handleDelete = async () => {
-    const taskDocRef = doc(db, "tasks", id);
+    const taskDocRefDelete = doc(db, "Task", id);
     try {
-      await deleteDoc(taskDocRef);
+      await deleteDoc(taskDocRefDelete);
     } catch (err) {
       alert(err);
     }
@@ -51,19 +51,6 @@ export default function Task(props) {
       {state === "defaultForm" && (
         <div className="container">
           <div className="container-task">
-            {/* <label
-              htmlFor={`checkbox-${id}`}
-              className="checkbox-custom-label"
-              onClick={() => setChecked(!checked ? checked : !checked)}
-            ></label>
-            <input
-              id={`checkbox-${id}`}
-              className="checkbox-custom"
-              name="checkbox"
-              checked={checked}
-              onChange={handleChange}
-              type="checkbox"
-            /> */}
             <Checkbox
               checked={checked}
               onChange={handleChange}

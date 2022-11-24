@@ -1,7 +1,17 @@
 .container-layout-tasks {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    width: 100%;
-    gap: 2.3rem;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+  gap: 5rem;
+}
+.tasks-empty {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 14px;
+}
+.title-next {
+  margin-bottom: -2rem;
 }
