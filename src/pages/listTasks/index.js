@@ -9,43 +9,41 @@ import Layout from "../../components/organisms/layout";
 import Task from "../../components/atoms/task";
 
 import "./listTasks.css";
-import { formatDateToday } from "../../utils/functions";
+//import { formatDateToday } from "../../utils/functions";
 
 const theme = createTheme();
 
 export default function ListTasks() {
   const [tasks, setTasks] = useState([]);
-  const [filteredDateEqual, setFilteredDateEqual] = useState([]);
-  const [filteredDateNext, setFilteredDateNext] = useState([]);
+  // const [filteredDateEqual, setFilteredDateEqual] = useState([]);
+  // const [filteredDateNext, setFilteredDateNext] = useState([]);
 
-  const today = new Date();
+  //const today = new Date();
 
-  const newDate = formatDateToday(today);
+  //const newDate = formatDateToday(today);
 
-  console.log(today, newDate);
+  // function filterDateEqual(value) {
+  //   if (
+  //     value?.data?.date_end.replace(/[^\d]+/g, "") ===
+  //     newDate.replace(/[^\d]+/g, "")
+  //   )
+  //     return value;
+  // }
 
-  function filterDateEqual(value) {
-    if (
-      value?.data?.date_end.replace(/[^\d]+/g, "") ===
-      newDate.replace(/[^\d]+/g, "")
-    )
-      return value;
-  }
+  // function filterDateNext(value) {
+  //   if (
+  //     value?.data?.date_end.replace(/[^\d]+/g, "") >
+  //     newDate.replace(/[^\d]+/g, "")
+  //   )
+  //     return value;
+  // }
 
-  function filterDateNext(value) {
-    if (
-      value?.data?.date_end.replace(/[^\d]+/g, "") >
-      newDate.replace(/[^\d]+/g, "")
-    )
-      return value;
-  }
-
-  function renderTasksEqual() {
-    setFilteredDateEqual(tasks.filter(filterDateEqual));
-  }
-  function renderTasksNext() {
-    setFilteredDateNext(tasks.filter(filterDateNext));
-  }
+  // function renderTasksEqual() {
+  //   tasks.length > 0 && setFilteredDateEqual(tasks?.filter(filterDateEqual));
+  // }
+  // function renderTasksNext() {
+  //   tasks.length > 0 && setFilteredDateNext(tasks?.filter(filterDateNext));
+  // }
 
   /* function to get all tasks from firestore in realtime */
   useEffect(() => {
@@ -60,15 +58,14 @@ export default function ListTasks() {
     });
   }, []);
 
-  useEffect(() => {
-    renderTasksNext();
-    renderTasksEqual();
-  });
+  // useEffect(() => {
+  //   renderTasksNext();
+  //   renderTasksEqual();
+  // });
 
   return (
     <ThemeProvider theme={theme}>
       <Grid
-        className="container"
         container
         component="main"
         sx={{ height: "100%", display: "flex", justifyContent: "flex-start" }}
@@ -81,13 +78,30 @@ export default function ListTasks() {
           backgroudGradient=" linear-gradient(180deg, #F5BE2E 19.98%, rgba(255, 255, 255, 0) 100%); linear-gradient(180deg, #F5BE2E 19.98%, rgba(255, 255, 255, 0) 100%);"
           colorButton="#F5BE2E"
         >
-          {filteredDateNext.length > 0 && filteredDateEqual ? (
+          {tasks.length > 0 ? (
             <div className="container-layout-tasks">
-              {filteredDateEqual.length > 0 && (
+              {tasks.map((task, index) => {
+                console.log(task);
+                return (
+                  <Task
+                    key={index}
+                    name={task?.data?.user_name}
+                    description={task?.data?.description}
+                    date={task?.data?.date_end}
+                    id={task?.id}
+                    title={task?.data?.title}
+                    completed={task?.data?.completed}
+                    dateLabel="Recorrente - hoje: "
+                  />
+                );
+              })}
+
+              {/* {filteredDateEqual.length > 0 && (
                 <div className="title-next">Hoje</div>
               )}
               {filteredDateEqual.length > 0 &&
                 filteredDateEqual.map((task, index) => {
+                  console.log(task)
                   return (
                     <Task
                       key={index}
@@ -107,6 +121,7 @@ export default function ListTasks() {
               )}
               {filteredDateNext.length > 0 &&
                 filteredDateNext.map((task, index) => {
+                  console.log(task)
                   return (
                     <Task
                       key={index}
@@ -119,7 +134,7 @@ export default function ListTasks() {
                       dateLabel="Recorrente - próximo: "
                     />
                   );
-                })}
+                })} */}
             </div>
           ) : (
             <div className="tasks-empty">

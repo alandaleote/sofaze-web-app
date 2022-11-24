@@ -1,11 +1,10 @@
 import React from "react";
 
-import { CssBaseline, Grid } from "@mui/material";
-
-import Box from "@mui/material/Box";
+import { Alert, CssBaseline, Grid } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Layout from "../../components/organisms/layout";
+import Task from "../../components/atoms/task";
 
 const theme = createTheme();
 
@@ -13,36 +12,41 @@ export default function ListBills() {
   return (
     <ThemeProvider theme={theme}>
       <Grid
-        className="container"
         container
         component="main"
         sx={{ height: "100%" }}
       >
         <CssBaseline />
-
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          md={5}
-          sx={{ height: "100%", overflow: "hidden" }}
-          elevation={6}
-          square
-        >
-          <Box
-            noValidate
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              height: "100%",
-            }}
-          >
-            <Layout
-              title="Controle de Contas"
+        <Layout title="Controle de Contas">
+          <div className="container-layout-tasks">
+            <Task
+              name="Energia"
+              description=""
+              date="5/12/2022"
+              title="Energia"
+              completed={false}
+              dateLabel="Vencimento - próximo: "
             />
-          </Box>
-        </Grid>
+          </div>
+
+          <div className="tasks-empty">
+            <Alert
+              fullWidth
+              severity="warning"
+              sx={{
+                width: "100%",
+                height: "auto",
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "center",
+                padding: "0 15px",
+                fontSize: "12px",
+              }}
+            >
+              <p>Nenhuma tarefa cadastrada</p>
+            </Alert>
+          </div>
+        </Layout>
       </Grid>
     </ThemeProvider>
   );

@@ -6,7 +6,7 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase.config";
 
 import "./taskUser.css";
-import FormUpdateUsers from "../../molecules/formUpdateUser";
+import FormUpdateUser from "../../molecules/formUpdateUser";
 import { IconButton } from "@mui/material";
 
 export default function TaskUser(props) {
@@ -40,7 +40,7 @@ export default function TaskUser(props) {
             </div>
           </div>
           <div className="container-actions">
-            <IconButton onClick={() => setState("update")}>
+            <IconButton onClick={() => setState("updateUser")}>
               <ModeEditOutlineOutlinedIcon
                 sx={{ fontSize: 24, color: "#f7971b" }}
               />
@@ -53,8 +53,8 @@ export default function TaskUser(props) {
           </div>
         </div>
       )}
-      {state === "update" && (
-        <FormUpdateUsers
+      {state === "updateUser" && (
+        <FormUpdateUser
           toEditName={name}
           toEditDescription={description}
           toEditeEmail={email}

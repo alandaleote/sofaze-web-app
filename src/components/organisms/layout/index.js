@@ -12,12 +12,9 @@ export default function Layout(props) {
     title,
     backgroudGradient,
     colorButton,
-    list = [],
     link,
     children,
   } = props;
-
-  console.log(list);
 
   const useStyles = makeStyles(() => ({
     containerLayout: {

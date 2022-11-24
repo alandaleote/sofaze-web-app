@@ -45,6 +45,7 @@ export default function Home(props) {
     },
     {
       title: "Contas",
+      link: "/controle-de-contas",
       icons: <AttachMoneyOutlinedIcon sx={{ fontSize: 32 }} />,
       color: "#21A179",
       width: "164px",

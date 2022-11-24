@@ -16,7 +16,6 @@ jobs:
       REACT_APP_FIREBASE_APP_ID: "${{ secrets.REACT_APP_FIREBASE_APP_ID }}"
       REACT_APP_FIREBASE_MEASUREMENT_ID: "${{ secrets.REACT_APP_FIREBASE_MEASUREMENT_ID }}"
     steps:
-    steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js environment
         uses: actions/setup-node@v3

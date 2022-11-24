@@ -27,7 +27,7 @@ const style = {
   pb: 3,
 };
 
-export default function FormUpdateUsers(props) {
+export default function FormUpdateUser(props) {
   const { id, toEditDescription, toEditName, toEditEmail } = props;
 
   const navigate = useNavigate();
@@ -152,7 +152,7 @@ export default function FormUpdateUsers(props) {
         </Modal>
       )}
       {state === "default" && (
-        <form className="container-form-tasks">
+        <form className="container-form-tasks-update-users">
           <div className="container-inputs">
             <TextField
               margin="normal"

@@ -145,7 +145,7 @@ export default function FormAddUsers(props) {
         </Modal>
       )}
       {state === "default" && (
-        <form className="container-form-tasks">
+        <form className="container-form-tasks-add-users">
           <div className="container-inputs">
             <TextField
               margin="normal"
