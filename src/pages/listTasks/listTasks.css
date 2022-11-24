@@ -1,0 +1,7 @@
+.container-layout-tasks {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+    gap: 2.3rem;
+}

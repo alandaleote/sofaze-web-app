@@ -17,6 +17,7 @@ import { collection, onSnapshot, addDoc, Timestamp } from "firebase/firestore";
 
 import "./formAddTasks.css";
 import { Grid } from "@material-ui/core";
+import formatDate from "../../../utils/functions";
 
 const useStyles = makeStyles((theme) => ({
   span: {
@@ -66,7 +67,7 @@ export default function FormAddTasks(props) {
         description: descriptionTask,
         completed: false,
         created: Timestamp.now(),
-        date_end: dateEnd,
+        date_end: formatDate(dateEnd),
         user_id: user.user_id,
         user_name: user.user_name,
       });
@@ -168,9 +169,7 @@ export default function FormAddTasks(props) {
                       fontSize: "12px",
                     }}
                   >
-                    <p>
-                      {messageSuccess}
-                    </p>
+                    <p>{messageSuccess}</p>
                   </Alert>
                 )
               )}
@@ -284,7 +283,9 @@ export default function FormAddTasks(props) {
             <div className="input-date">
               <label>Data final:</label>
               <input
+                id="date"
                 required
+                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
                 onChange={(e) => setDateEnd(e.target.value)}
                 type="date"
                 className="form-control"
