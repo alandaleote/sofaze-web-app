@@ -7,7 +7,6 @@ import { CssBaseline, Grid, Box } from "@mui/material";
 //import FormatPaintIcon from "@mui/icons-material/FormatPaint";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-
 import Navbar from "../../components/molecules/nav-bar";
 import ListCards from "../../components/molecules/listCards";
 
@@ -38,6 +37,7 @@ export default function Home(props) {
     // },
     {
       title: "Tarefas",
+      link: "lista-de-tarefas",
       icons: <CheckCircleOutlineOutlinedIcon sx={{ fontSize: 32 }} />,
       color: "#ffba06",
       width: "164px",

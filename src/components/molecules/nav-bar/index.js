@@ -65,7 +65,7 @@ function Navbar() {
   }
 
   return (
-    <div className={menuOpen ? "container" : "container-wrapper"}>
+    <div className={menuOpen ? "container-nav-wrapper" : "container-wrapper"}>
       <div className={!menuOpen ? "header-nav-container" : "header-nav-open"}>
         <div className="navbar-container">
           {menuOpen ? (
@@ -101,7 +101,9 @@ function Navbar() {
                     onClick={() => setMenuOpen(false)}
                   >
                     <ListItemAvatar>
-                    <CheckCircleOutlineOutlinedIcon sx={{ fontSize: 32, color: "#F5BE2E" }} />
+                      <CheckCircleOutlineOutlinedIcon
+                        sx={{ fontSize: 32, color: "#F5BE2E" }}
+                      />
                     </ListItemAvatar>
                     <ListItemText>
                       <Link to="/lista-de-tarefas" className={classes.link}>
@@ -111,7 +113,7 @@ function Navbar() {
                       </Link>
                     </ListItemText>
                   </ListItem>
-                  <Divider/>
+                  <Divider />
                   <ListItem
                     className={classes.listItem}
                     onClick={() => setMenuOpen(false)}
@@ -125,6 +127,22 @@ function Navbar() {
                       <Link to="/controle-de-contas" className={classes.link}>
                         <span style={{ color: "#0c497a" }}>
                           Controle de contas
+                        </span>
+                      </Link>
+                    </ListItemText>
+                  </ListItem>
+
+                  <ListItem
+                    className={classes.listItem}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <ListItemAvatar>
+                      <SettingsOutlinedIcon sx={{ fontSize: 32 }} />
+                    </ListItemAvatar>
+                    <ListItemText>
+                      <Link to="/configuracoes" className={classes.link}>
+                        <span style={{ color: "#0c497a" }}>
+                          Configurações
                         </span>
                       </Link>
                     </ListItemText>
@@ -148,19 +166,23 @@ function Navbar() {
 
             <IconButton>
               <Link to="/lista-de-tarefas">
-                <CheckCircleOutlineOutlinedIcon sx={{ fontSize: 32, color: "#F5BE2E" }} />
+                <CheckCircleOutlineOutlinedIcon
+                  sx={{ fontSize: 32, color: "#F5BE2E" }}
+                />
               </Link>
             </IconButton>
 
-            <IconButton>
+            {/* <IconButton>
               <Link to="/configuracoes">
                 <AddCircleIcon sx={{ fontSize: 50 }} />
               </Link>
-            </IconButton>
+            </IconButton> */}
 
             <IconButton>
               <Link to="/contas">
-                <AttachMoneyOutlinedIcon   sx={{ fontSize: 32, color: "#21a179" }} />
+                <AttachMoneyOutlinedIcon
+                  sx={{ fontSize: 32, color: "#21a179" }}
+                />
               </Link>
             </IconButton>
 

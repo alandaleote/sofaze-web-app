@@ -50,7 +50,7 @@ export default function Task(props) {
   return (
     <>
       {state === "defaultForm" && (
-        <div className="container">
+        <div className="container-box-tasks">
           <div className="container-task">
             <Checkbox
               checked={checked}

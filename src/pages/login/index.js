@@ -118,7 +118,7 @@ export default function Login() {
   return (
     <ThemeProvider theme={theme}>
       <Grid
-        className="container"
+        className="container-login"
         container
         component="main"
         sx={{ height: "100vh" }}
