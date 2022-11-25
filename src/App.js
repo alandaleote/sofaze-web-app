@@ -23,7 +23,6 @@ import AddBills from "./pages/addBills";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
-  const [timeActive, setTimeActive] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -32,7 +31,7 @@ function App() {
   }, []);
   return (
     <Router>
-      <AuthProvider value={{ currentUser, timeActive, setTimeActive }}>
+      <AuthProvider value={{ currentUser }}>
         <Routes>
           <Route
             exact

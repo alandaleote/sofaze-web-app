@@ -23,7 +23,6 @@ const theme = createTheme();
 function VerifyEmail() {
   const { currentUser } = useAuthValue();
   const [time, setTime] = useState(60);
-  const { timeActive, setTimeActive } = useAuthValue();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,22 +43,21 @@ function VerifyEmail() {
 
   useEffect(() => {
     let interval = null;
-    if (timeActive && time !== 0) {
+    if ( time !== 0) {
       interval = setInterval(() => {
         setTime((time) => time - 1);
       }, 1000);
     } else if (time === 0) {
-      setTimeActive(false);
       setTime(60);
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [timeActive, time, setTimeActive]);
+  }, [time]);
 
   const resendEmailVerification = () => {
     sendEmailVerification(auth.currentUser)
       .then(() => {
-        setTimeActive(true);
+        setTime(true);
       })
       .catch((err) => {
         alert(err.message);
@@ -120,12 +118,11 @@ function VerifyEmail() {
             <Button
               type="button"
               onClick={resendEmailVerification}
-              disabled={timeActive}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 5, background: "#3f88c5" }}
             >
-              Reenviar email {timeActive && time}
+              Reenviar email {time}
             </Button>
           </Box>
         </Grid>

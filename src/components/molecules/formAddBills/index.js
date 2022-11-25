@@ -73,8 +73,13 @@ export default function FormAddBills(props) {
   const [payBill, setPayBill] = useState("");
   const [dateEnd, setDateEnd] = useState("");
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log(nameBill, descriptionBill, payBill)
+    console.log(categoryBill?.name, categoryBill?.id , categoryBill?.name )
 
     try {
       await addDoc(collection(db, "Bills"), {
@@ -84,10 +89,10 @@ export default function FormAddBills(props) {
         completed: false,
         created: Timestamp.now(),
         date_end: formatDate(dateEnd),
-        user_id: user.user_id === "" && listUsers?.[0].id,
-        user_name: user.user_name === "" && listUsers?.[0].data.name,
-        category_id: categoryBill?.id === "" && listCategory?.[0].id,
-        category_name: categoryBill?.name === "" && listCategory?.[0].name,
+        user_id: user.user_id,
+        user_name: user.user_name,
+        category_id: categoryBill?.id ,
+        category_name: categoryBill?.name,
         uid: currentUser?.uid,
       });
       setMessageSuccess("Formulário enviado com sucesso!");
