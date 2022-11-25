@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthValue } from "../../../auth-context";
 import { db } from "../../../firebase/firebase.config";
-import { doc, updateDoc, collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, onSnapshot, addDoc, Timestamp } from "firebase/firestore";
 import {
   Alert,
   Box,
@@ -13,9 +13,10 @@ import {
   TextField,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
+
 import { Grid } from "@material-ui/core";
 import formatDate from "../../../utils/functions";
-import "./formUpdateTask.css";
+import "./formAddTask.css";
 
 const useStyles = makeStyles((theme) => ({
   span: {
@@ -40,54 +41,52 @@ const style = {
   pb: 3,
 };
 
-export default function FormUpdateTask(props) {
-  const { id, toEditTitle, toEditDescription, toEditName, toEditDate } = props;
-
-  const { currentUser } = useAuthValue();
+export default function FormAddBills(props) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { currentUser } = useAuthValue();
 
   const [listUsers, setListUsers] = useState([]);
   const [messageError, setMessageError] = useState(null);
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [user, setUser] = useState(toEditName);
-  const [titleTask, setTitleTask] = useState(toEditTitle);
-  const [descriptionTask, setDescriptionTask] = useState(toEditDescription);
-  const [dateEnd, setDateEnd] = useState(toEditDate);
+  const [user, setUser] = useState({ user_id: "", user_name: ""});
+  const [titleTask, setTitleTask] = useState("");
+  const [descriptionTask, setDescriptionTask] = useState("");
+  const [dateEnd, setDateEnd] = useState("");
 
-  const handleUpdate = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const taskDocRef = doc(db, "Task", id);
     try {
-      await updateDoc(taskDocRef, {
+      await addDoc(collection(db, "Task"), {
         title: titleTask,
         description: descriptionTask,
+        completed: false,
+        created: Timestamp.now(),
         date_end: formatDate(dateEnd),
-        user_name: user,
+        user_id: user.user_id === "" && listUsers?.[0].id,
+        user_name: user.user_name === "" && listUsers?.[0].name,
+        uid: currentUser?.uid,
       });
-      setMessageSuccess("Dados atualizados com sucesso!");
+      setMessageSuccess("Formulário enviado com sucesso!");
       setState("submiting");
       setOpen(true);
     } catch (err) {
-      setMessageError("Erro ao editar os dados. Tente novamente!");
+      setMessageError("Erro ao enviar o formulário. Tente novamente!");
       setOpen(true);
       setState("submiting");
     }
   };
 
-  React.useEffect(() => {
-    const q = query(collection(db, "Users"), where('uid', '==', currentUser.uid));
-    onSnapshot(q, (querySnapshot) => {
-      setListUsers(
-        querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      );
+  useEffect(() => {
+    onSnapshot(collection(db, "Users"), (snapshot) => {
+      const filterUsers = snapshot?.docs?.map((doc) => {
+        return { ...doc?.data(), id: doc?.id };
+      });
+      setListUsers(filterUsers);
     });
-  }, [currentUser.uid]);
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -155,35 +154,26 @@ export default function FormUpdateTask(props) {
               )}
             </Grid>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              {messageError && (
-                <Button
-                  sx={{
-                    fontSize: "12px",
-                    textTransform: "none",
-                    margin: "5px",
-                  }}
-                  onClick={handleGoBackForm}
-                >
-                  Voltar para o formulário
-                </Button>
-              )}
               <Button
-                sx={{
-                  fontSize: "12px",
-                  textTransform: "none",
-                  margin: "5px",
-                }}
+                sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
+                onClick={handleGoBackForm}
+              >
+                Voltar para o formulaŕio
+              </Button>
+              <Button
+                sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
                 onClick={handleGoHome}
               >
-                Ir para Home
+                Voltar para a Home
               </Button>
             </Box>
           </Box>
         </Modal>
       )}
       {state === "default" && (
-        <form className="container-form-tasks-update">
+        <form className="container-form-tasks-add">
           <div className="container-inputs">
+         
             <FormControl fullWidth>
               <span className={classes.span} id="demo-simple-select-label">
                 Usuários
@@ -199,12 +189,22 @@ export default function FormUpdateTask(props) {
                     return (
                       <option
                         key={index}
-                        value={user.data.id}
-                        name={user.data.name}
-                        onClick={(e) => setUser(user.data.name)}
-                        onChange={(e) => setUser(user.data.name)}
+                        value={user.id}
+                        name={user.name}
+                        onClick={(e) =>
+                          setUser({
+                            user_id: e.target.value,
+                            user_name: user.name,
+                          })
+                        }
+                        onChange={(e) =>
+                          setUser({
+                            user_id: e.target.value,
+                            user_name: user.name,
+                          })
+                        }
                       >
-                        {user.data.name}
+                        {user.name}
                       </option>
                     );
                   })}
@@ -250,13 +250,14 @@ export default function FormUpdateTask(props) {
           <Button
             className="button-entry"
             type="button"
-            onClick={handleUpdate}
+            onClick={handleSubmit}
+            disabled={titleTask === "" || descriptionTask === ""}
             fullWidth
             variant="contained"
             color="success"
             sx={{ mt: 3, mb: 3, background: "#21a179" }}
           >
-            Editar
+            Enviar
           </Button>
         </form>
       )}

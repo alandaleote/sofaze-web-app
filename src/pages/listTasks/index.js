@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  query,
+  onSnapshot,
+  where,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebase.config";
+import { useAuthValue } from "../../auth-context";
 
 import { Alert, CssBaseline, Grid } from "@mui/material";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Layout from "../../components/organisms/layout";
 import Task from "../../components/atoms/task";
@@ -15,6 +20,8 @@ const theme = createTheme();
 
 export default function ListTasks() {
   const [tasks, setTasks] = useState([]);
+  const { currentUser } = useAuthValue();
+
   // const [filteredDateEqual, setFilteredDateEqual] = useState([]);
   // const [filteredDateNext, setFilteredDateNext] = useState([]);
 
@@ -47,7 +54,10 @@ export default function ListTasks() {
 
   /* function to get all tasks from firestore in realtime */
   useEffect(() => {
-    const q = query(collection(db, "Task"), orderBy("created", "desc"));
+    const q = query(
+      collection(db, "Task"),
+      where("uid", "==", currentUser.uid),
+    );
     onSnapshot(q, (querySnapshot) => {
       setTasks(
         querySnapshot.docs.map((doc) => ({
@@ -56,7 +66,7 @@ export default function ListTasks() {
         }))
       );
     });
-  }, []);
+  }, [currentUser.uid]);
 
   // useEffect(() => {
   //   renderTasksNext();
@@ -81,7 +91,6 @@ export default function ListTasks() {
           {tasks.length > 0 ? (
             <div className="container-layout-tasks">
               {tasks.map((task, index) => {
-                console.log(task);
                 return (
                   <Task
                     key={index}

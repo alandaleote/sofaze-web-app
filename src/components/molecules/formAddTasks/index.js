@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { db } from "../../../firebase/firebase.config";
+import { collection, onSnapshot, addDoc, Timestamp, where, query } from "firebase/firestore";
+import { useAuthValue } from "../../../auth-context";
 import {
   Alert,
   Box,
@@ -10,8 +13,6 @@ import {
   TextField,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-import { db } from "../../../firebase/firebase.config";
-import { collection, onSnapshot, addDoc, Timestamp } from "firebase/firestore";
 import { Grid } from "@material-ui/core";
 import formatDate from "../../../utils/functions";
 import "./formAddTask.css";
@@ -43,6 +44,8 @@ export default function FormAddTasks(props) {
   const classes = useStyles();
   const navigate = useNavigate();
 
+  const { currentUser } = useAuthValue();
+
   //const [listCategory, setListCategory] = useState([]);
   //const [category, setCategory] = useState("");
 
@@ -51,10 +54,11 @@ export default function FormAddTasks(props) {
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [user, setUser] = useState({ user_id: "", user_name: ""});
+  const [user, setUser] = useState({ user_id: "", user_name: "" });
   const [titleTask, setTitleTask] = useState("");
   const [descriptionTask, setDescriptionTask] = useState("");
   const [dateEnd, setDateEnd] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +70,8 @@ export default function FormAddTasks(props) {
         created: Timestamp.now(),
         date_end: formatDate(dateEnd),
         user_id: user.user_id === "" && listUsers?.[0].id,
-        user_name: user.user_name === "" && listUsers?.[0].name,
+        user_name: user.user_name === "" && listUsers?.[0].data.name,
+        uid: currentUser?.uid,
       });
       setMessageSuccess("Formulário enviado com sucesso!");
       setState("submiting");
@@ -78,14 +83,26 @@ export default function FormAddTasks(props) {
     }
   };
 
-  useEffect(() => {
-    onSnapshot(collection(db, "Users"), (snapshot) => {
-      const filterUsers = snapshot?.docs?.map((doc) => {
-        return { ...doc?.data(), id: doc?.id };
-      });
-      setListUsers(filterUsers);
+  // useEffect(() => {
+  //   onSnapshot(collection(db, "Users"), (snapshot) => {
+  //     const filterUsers = snapshot?.docs?.map((doc) => {
+  //       return { ...doc?.data(), id: doc?.id };
+  //     });
+  //     setListUsers(filterUsers);
+  //   });
+  // }, []);
+
+  React.useEffect(() => {
+    const q = query(collection(db, "Users"), where('uid', '==', currentUser.uid));
+    onSnapshot(q, (querySnapshot) => {
+      setListUsers(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
     });
-  }, []);
+  }, [currentUser.uid]);
 
   const handleClose = () => {
     setOpen(false);
@@ -234,21 +251,21 @@ export default function FormAddTasks(props) {
                       <option
                         key={index}
                         value={user.id}
-                        name={user.name}
+                        name={user.data.name}
                         onClick={(e) =>
                           setUser({
                             user_id: e.target.value,
-                            user_name: user.name,
+                            user_name: user.data.name,
                           })
                         }
                         onChange={(e) =>
                           setUser({
                             user_id: e.target.value,
-                            user_name: user.name,
+                            user_name: user.data.name,
                           })
                         }
                       >
-                        {user.name}
+                        {user.data.name}
                       </option>
                     );
                   })}
