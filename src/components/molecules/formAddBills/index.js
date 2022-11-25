@@ -330,8 +330,7 @@ export default function FormAddBills(props) {
             disabled={
               nameBill === "" ||
               descriptionBill === "" ||
-              payBill === "" ||
-              categoryBill?.id === ""
+              payBill === "" 
             }
             fullWidth
             variant="contained"

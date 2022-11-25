@@ -344,6 +344,7 @@ export default function FormUpdateBill(props) {
             className="button-entry"
             type="button"
             onClick={handleUpdate}
+            disabled={false}
             fullWidth
             variant="contained"
             color="success"
