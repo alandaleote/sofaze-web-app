@@ -71,12 +71,14 @@ function Navbar() {
           {menuOpen ? (
             <div className="container-menu">
               <div className="menu-container">
-                <IconButton
-                  className={classes.close}
-                  onClick={() => setMenuOpen(!menuOpen)}
-                >
-                  <CloseOutlinedIcon sx={{ fontSize: 32, color: "#ff5864" }} />
-                </IconButton>
+                <div className={classes.close}>
+                  <IconButton onClick={() => setMenuOpen(!menuOpen)}>
+                    <CloseOutlinedIcon
+                      sx={{ fontSize: 32, color: "#ff5864" }}
+                    />
+                  </IconButton>
+                </div>
+
                 <List className={classes.list}>
                   <ListItem
                     className={classes.listItem}
@@ -141,9 +143,7 @@ function Navbar() {
                     </ListItemAvatar>
                     <ListItemText>
                       <Link to="/configuracoes" className={classes.link}>
-                        <span style={{ color: "#0c497a" }}>
-                          Configurações
-                        </span>
+                        <span style={{ color: "#0c497a" }}>Configurações</span>
                       </Link>
                     </ListItemText>
                   </ListItem>
