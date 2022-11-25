@@ -11,13 +11,18 @@ const theme = createTheme();
 export default function ListBills() {
   return (
     <ThemeProvider theme={theme}>
-      <Grid
-        container
-        component="main"
-        sx={{ height: "100%" }}
-      >
+      <Grid container component="main" sx={{ height: "100%" }}>
         <CssBaseline />
-        <Layout title="Controle de Contas">
+        <Layout
+          title="Controle de Contas"
+          link="/adicionar-contas"
+          backgroudGradient="linear-gradient(
+            180deg,
+            #21a179 19.98%,
+            rgba(255, 255, 255, 0) 100%
+          );"
+          colorButton="#21a179"
+        >
           <div className="container-layout-tasks">
             <Task
               name="Energia"
