@@ -1,16 +1,38 @@
+import React, { useContext, useEffect, useState } from "react";
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/firebase.config';
 
-import React, {useContext} from 'react'
+const AuthContext = React.createContext();
 
-const AuthContext = React.createContext()
+export function AuthProvider({ children, value }) {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+  }, []);
 
-export function AuthProvider({children, value}) {
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  )
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "80vh",
+        }}
+      >
+        <h1>Loading User...</h1>
+      </div>
+    );
+  }
+  return <AuthContext.Provider value={{
+    currentUser,
+  }}>{children}</AuthContext.Provider>;
 }
 
-export function useAuthValue(){
-  return useContext(AuthContext)
+export function useAuthValue() {
+  return useContext(AuthContext);
 }

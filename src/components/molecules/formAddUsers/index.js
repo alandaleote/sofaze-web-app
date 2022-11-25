@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Alert, Box, Button, Modal, TextField } from "@mui/material";
 import { db } from "../../../firebase/firebase.config";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { useAuthValue } from "../../../auth-context";
 import { Grid } from "@material-ui/core";
 import "./formAddUser.css";
 
@@ -22,6 +23,8 @@ const style = {
 export default function FormAddUsers(props) {
   const { listUsers = [] } = props;
 
+  const { currentUser } = useAuthValue();
+
   const [messageError, setMessageError] = useState(null);
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
@@ -31,20 +34,21 @@ export default function FormAddUsers(props) {
   const [email, setEmail] = useState("");
   const [filteredEmail, setFilteredEmail] = useState("");
 
+
   function filterEmailUser(value) {
-    if (value?.email === email) return value;
+    if (value?.data.email === email) return value;
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     listUsers.length > 0 && setFilteredEmail(listUsers.filter(filterEmailUser));
-
-    if (filteredEmail?.[0]?.email !== email) {
+    console.log(filteredEmail)
       try {
         await addDoc(collection(db, "Users"), {
           name: name,
           email: email,
+          uid: currentUser?.uid,
           description: description,
           created: Timestamp.now(),
         });
@@ -56,11 +60,6 @@ export default function FormAddUsers(props) {
         setOpen(true);
         setState("submiting");
       }
-    } else {
-      setMessageError("Email já cadastrado. Tente outro!");
-      setOpen(true);
-      setState("submiting");
-    }
   };
 
   const handleClose = () => {
@@ -171,7 +170,6 @@ export default function FormAddUsers(props) {
             />
             <TextField
               margin="normal"
-              type="email"
               required
               fullWidth
               id="email"

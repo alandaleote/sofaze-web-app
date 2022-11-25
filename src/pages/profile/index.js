@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import { db } from "../../firebase/firebase.config";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -29,13 +29,16 @@ function Profile() {
   const [state, setState] = React.useState("default");
 
   React.useEffect(() => {
-    onSnapshot(collection(db, "Users"), (snapshot) => {
-      const filterUsers = snapshot?.docs?.map((doc) => {
-        return { ...doc?.data(), id: doc?.id };
-      });
-      setListUsers(filterUsers);
+    const q = query(collection(db, "Users"), where('uid', '==', currentUser.uid));
+    onSnapshot(q, (querySnapshot) => {
+      setListUsers(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
     });
-  }, []);
+  }, [currentUser.uid]);
 
   function handleListUsers() {
     setState("listUsers");
@@ -170,9 +173,9 @@ function Profile() {
                 {listUsers?.map((user) => {
                   return (
                     <div className="list-users">
-                      <span>Nome: {user.name}</span>
-                      <span>E-mail: {user.email}</span>
-                      <span>Descrição: {user.description}</span>
+                      <span>Nome: {user.data.name}</span>
+                      <span>E-mail: {user.data.email}</span>
+                      <span>Descrição: {user.data.description}</span>
                     </div>
                   );
                 })}
@@ -227,9 +230,9 @@ function Profile() {
                       <div className="list-task-users">
                         <h3>{`Usuário: 000-${index}`} </h3>
                         <TaskUser
-                          name={user.name}
-                          description={user.description}
-                          email={user.email}
+                          name={user.data.name}
+                          description={user.data.description}
+                          email={user.data.email}
                           id={user.id}
                         />
                       </div>
