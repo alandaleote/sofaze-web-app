@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuthValue } from "../../auth-context";
 import {
   signInWithEmailAndPassword,
   sendEmailVerification,
@@ -38,7 +37,6 @@ const theme = createTheme();
 
 export default function Login() {
   const [email, setEmail] = React.useState("");
-  const { setTimeActive } = useAuthValue();
   const navigate = useNavigate();
   const [msg, setMsg] = React.useState("");
   const [msgType, setMsgType] = React.useState("");
@@ -72,7 +70,6 @@ export default function Login() {
         if (!auth.currentUser.emailVerified) {
           sendEmailVerification(auth.currentUser)
             .then(() => {
-              setTimeActive(true);
               setMsgType("sucesso");
               navigate("/verify-email");
             })

@@ -1,0 +1,58 @@
+.container-form-bills-update {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
+  width: 100%;
+}
+.container-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+.button-entry {
+  position: absolute;
+  bottom: 2rem;
+}
+
+.input-date {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  margin-top: 0.5rem;
+}
+
+.form-control {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.4375em;
+  letter-spacing: 0.00938em;
+  box-sizing: border-box;
+  background: none;
+  position: relative;
+  cursor: text;
+  display: block;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  border-radius: 4px;
+  padding: 16.5px 14px;
+  border-style: solid;
+  border-width: 1px;
+  overflow: hidden;
+  min-width: 0%;
+  border-color: rgba(0, 0, 0, 0.23);
+  color: rgba(104, 100, 100, 0.87);
+}
+.form-control:focus {
+  border-radius: inherit;
+  border-style: solid;
+  border-width: 2px;
+  overflow: hidden;
+  min-width: 0%;
+  border-color: #1d84d8;
+  outline: none;
+}

@@ -7,16 +7,20 @@ import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../../../firebase/firebase.config";
 
 import "./taskBill.css";
-import FormUpdateTask from "../../molecules/formUpdateTask";
+import FormUpdateBill from "../../molecules/formUpdateBill";
 
 export default function TaskBill(props) {
   const {
+    pay_bill = "",
+    user_id = ",",
+    user_name = "",
+    category_id = "",
+    category_name = "",
     name = "",
     description = "",
     date = "",
     dateLabel = "",
     id = "",
-    title = "",
     completed,
   } = props;
 
@@ -43,7 +47,7 @@ export default function TaskBill(props) {
   }
 
   const handleDelete = async () => {
-    const taskDocRefDelete = doc(db, "Bill", id);
+    const taskDocRefDelete = doc(db, "Bills", id);
     try {
       await deleteDoc(taskDocRefDelete);
     } catch (err) {
@@ -64,8 +68,9 @@ export default function TaskBill(props) {
               inputProps={{ "aria-label": "controlled" }}
             />
             <div className="container-content">
+              <span className="name">{category_name && category_name}</span>
               <span className="name">{name && name}</span>
-              <span className="description">{description && description}</span>
+              <span className="description">{pay_bill && pay_bill}</span>
               <span className="date">
                 {dateLabel}
                 {date && date}
@@ -86,12 +91,16 @@ export default function TaskBill(props) {
           </div>
         </div>
       )}
-      {stateBills === "updateBills" && (
-        <FormUpdateTask
+      {stateBills === "updateBill" && (
+        <FormUpdateBill
           toEditName={name}
           toEditDescription={description}
-          toEditeDate={date}
-          toEditeTitle={title}
+          toEditDate={date}
+          toEditPayBill={pay_bill}
+          toEditUserId={user_id}
+          toEditUserName={user_name}
+          toEditCategoryId={category_id}
+          toEditCategoryName={category_name}
           id={id}
         />
       )}
