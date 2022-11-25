@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthValue } from "../../../auth-context";
 import { db } from "../../../firebase/firebase.config";
 import {
+  doc,
+  updateDoc,
   collection,
   onSnapshot,
-  addDoc,
-  Timestamp,
-  where,
   query,
+  where,
 } from "firebase/firestore";
-import { useAuthValue } from "../../../auth-context";
 import {
   Alert,
   Box,
@@ -20,10 +20,9 @@ import {
   TextField,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-
 import { Grid } from "@material-ui/core";
 import formatDate from "../../../utils/functions";
-import "./formAddBill.css";
+import "./formUpdateBill.css";
 
 const useStyles = makeStyles((theme) => ({
   span: {
@@ -48,55 +47,63 @@ const style = {
   pb: 3,
 };
 
-const categoryList = [
-  { id: "transport", name: "Transport" },
-  { id: "supermarket", name: "supermarket" },
-  { id: "fun", name: "fun" },
-];
+export default function FormUpdateBill(props) {
+  const {
+    id,
+    toEditDescription,
+    toEditDate,
+    toEditName,
+    toEditPayBill,
+    toEditUserId,
+    toEditUserName,
+    toEditCategoryId,
+    toEditCategoryName,
+  } = props;
 
-export default function FormAddBills(props) {
+  const categoryList = [
+    { id: "transport", name: "Transport" },
+    { id: "supermarket", name: "supermarket" },
+    { id: "fun", name: "fun" },
+  ];
+
+  const { currentUser } = useAuthValue();
   const classes = useStyles();
   const navigate = useNavigate();
-  const { currentUser } = useAuthValue();
 
   const [listUsers, setListUsers] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [listCategory, setListCategory] = useState(categoryList);
   const [messageError, setMessageError] = useState(null);
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [user, setUser] = useState({ user_id: "", user_name: "" });
-  const [categoryBill, setCategoryBill] = useState({ id: "", name: "" });
-  const [nameBill, setNameBill] = useState("");
-  const [descriptionBill, setDescriptionBill] = useState("");
-  const [payBill, setPayBill] = useState("");
-  const [dateEnd, setDateEnd] = useState("");
+  const [user, setUser] = useState({ id: toEditUserId, name: toEditUserName });
+  const [name, setName] = useState(toEditName);
+  const [payBill, setPayBill] = useState(toEditPayBill);
+  const [categoryBill, setCategoryBill] = useState({
+    id: toEditCategoryId,
+    name: toEditCategoryName,
+  });
+  const [description, setDescription] = useState(toEditDescription);
+  const [dateEnd, setDateEnd] = useState(toEditDate);
 
-
-
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-
+    const taskDocRef = doc(db, "Bills", id);
     try {
-      await addDoc(collection(db, "Bills"), {
-        name: nameBill,
-        description: descriptionBill,
-        pay_bill: parseFloat(payBill).toFixed(2),
-        completed: false,
-        created: Timestamp.now(),
-        date_end: formatDate(dateEnd),
-        user_id: user.user_id,
-        user_name: user.user_name,
-        category_id: categoryBill?.id ,
+      await updateDoc(taskDocRef, {
+        category_id: categoryBill?.id,
         category_name: categoryBill?.name,
-        uid: currentUser?.uid,
+        user_name: user?.id,
+        user_id: user?.name,
+        name: name,
+        pay_bill: payBill,
+        description: description,
+        date_end: formatDate(dateEnd),
       });
-      setMessageSuccess("Formulário enviado com sucesso!");
+      setMessageSuccess("Dados atualizados com sucesso!");
       setState("submiting");
       setOpen(true);
     } catch (err) {
-      setMessageError("Erro ao enviar o formulário. Tente novamente!");
+      setMessageError("Erro ao editar os dados. Tente novamente!");
       setOpen(true);
       setState("submiting");
     }
@@ -183,24 +190,34 @@ export default function FormAddBills(props) {
               )}
             </Grid>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              {messageError && (
+                <Button
+                  sx={{
+                    fontSize: "12px",
+                    textTransform: "none",
+                    margin: "5px",
+                  }}
+                  onClick={handleGoBackForm}
+                >
+                  Voltar para o formulário
+                </Button>
+              )}
               <Button
-                sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
-                onClick={handleGoBackForm}
-              >
-                Voltar para o formulaŕio
-              </Button>
-              <Button
-                sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
+                sx={{
+                  fontSize: "12px",
+                  textTransform: "none",
+                  margin: "5px",
+                }}
                 onClick={handleGoHome}
               >
-                Voltar para a Home
+                Ir para Home
               </Button>
             </Box>
           </Box>
         </Modal>
       )}
       {state === "default" && (
-        <form className="container-form-bills-add">
+        <form className="container-form-bills-update">
           <div className="container-inputs">
             <FormControl fullWidth>
               <span className={classes.span} id="demo-simple-select-label">
@@ -217,18 +234,18 @@ export default function FormAddBills(props) {
                     return (
                       <option
                         key={index}
-                        value={user.id}
+                        value={user.data.id}
                         name={user.data.name}
                         onClick={(e) =>
                           setUser({
-                            user_id: e.target.value,
-                            user_name: user.data.name,
+                            id: e.target.value,
+                            name: user.data.name,
                           })
                         }
                         onChange={(e) =>
                           setUser({
-                            user_id: e.target.value,
-                            user_name: user.data.name,
+                            id: e.target.value,
+                            name: user.data.name,
                           })
                         }
                       >
@@ -248,8 +265,8 @@ export default function FormAddBills(props) {
                 fullWidth
                 native
               >
-                {listCategory.length > 0 &&
-                  listCategory?.map((category, index) => {
+                {categoryList.length > 0 &&
+                  categoryList?.map((category, index) => {
                     return (
                       <option
                         key={index}
@@ -278,11 +295,11 @@ export default function FormAddBills(props) {
               margin="normal"
               required
               fullWidth
-              id="title"
+              id="name"
               label="Nome da conta"
-              name="title"
-              onChange={(e) => setNameBill(e.target.value)}
-              value={nameBill && nameBill}
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+              value={name && name}
               autoFocus
             />
             <TextField
@@ -292,8 +309,8 @@ export default function FormAddBills(props) {
               id="description"
               label="Descrição da conta"
               name="description"
-              onChange={(e) => setDescriptionBill(e.target.value)}
-              value={descriptionBill && descriptionBill}
+              onChange={(e) => setDescription(e.target.value)}
+              value={description && description}
               autoFocus
             />
 
@@ -326,19 +343,13 @@ export default function FormAddBills(props) {
           <Button
             className="button-entry"
             type="button"
-            onClick={handleSubmit}
-            disabled={
-              nameBill === "" ||
-              descriptionBill === "" ||
-              payBill === "" ||
-              categoryBill?.id === ""
-            }
+            onClick={handleUpdate}
             fullWidth
             variant="contained"
             color="success"
             sx={{ mt: 3, mb: 3, background: "#21a179" }}
           >
-            Enviar
+            Editar
           </Button>
         </form>
       )}
