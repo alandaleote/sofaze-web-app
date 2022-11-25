@@ -19,6 +19,7 @@ import Bills from "./pages/bills";
 import ListTasks from "./pages/listTasks";
 import ListBills from "./pages/listBills";
 import AddTasks from "./pages/addTasks";
+import AddBills from "./pages/addBills";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -66,6 +67,15 @@ function App() {
             element={
               <PrivateRoute>
                 <ListBills />
+              </PrivateRoute>
+            }
+          />
+            <Route
+            exact
+            path="/adicionar-contas"
+            element={
+              <PrivateRoute>
+                <AddBills />
               </PrivateRoute>
             }
           />

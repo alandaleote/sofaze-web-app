@@ -1,8 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthValue } from "../../../auth-context";
 import { db } from "../../../firebase/firebase.config";
-import { collection, onSnapshot, addDoc, Timestamp } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  addDoc,
+  Timestamp,
+  where,
+  query,
+} from "firebase/firestore";
+import { useAuthValue } from "../../../auth-context";
 import {
   Alert,
   Box,
@@ -16,7 +23,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { Grid } from "@material-ui/core";
 import formatDate from "../../../utils/functions";
-import "./formAddTask.css";
+import "./formAddBill.css";
 
 const useStyles = makeStyles((theme) => ({
   span: {
@@ -41,32 +48,46 @@ const style = {
   pb: 3,
 };
 
+const categoryList = [
+  { id: "transport", name: "Transport" },
+  { id: "supermarket", name: "supermarket" },
+  { id: "fun", name: "fun" },
+];
+
 export default function FormAddBills(props) {
   const classes = useStyles();
   const navigate = useNavigate();
   const { currentUser } = useAuthValue();
 
   const [listUsers, setListUsers] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [listCategory, setListCategory] = useState(categoryList);
   const [messageError, setMessageError] = useState(null);
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [user, setUser] = useState({ user_id: "", user_name: ""});
-  const [titleTask, setTitleTask] = useState("");
-  const [descriptionTask, setDescriptionTask] = useState("");
+  const [user, setUser] = useState({ user_id: "", user_name: "" });
+  const [categoryBill, setCategoryBill] = useState({ id: "", name: "" });
+  const [nameBill, setNameBill] = useState("");
+  const [descriptionBill, setDescriptionBill] = useState("");
+  const [payBill, setPayBill] = useState("");
   const [dateEnd, setDateEnd] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await addDoc(collection(db, "Task"), {
-        title: titleTask,
-        description: descriptionTask,
+      await addDoc(collection(db, "Bills"), {
+        name: nameBill,
+        description: descriptionBill,
+        pay_bill: payBill,
         completed: false,
         created: Timestamp.now(),
         date_end: formatDate(dateEnd),
         user_id: user.user_id === "" && listUsers?.[0].id,
-        user_name: user.user_name === "" && listUsers?.[0].name,
+        user_name: user.user_name === "" && listUsers?.[0].data.name,
+        category_id: categoryBill?.id === "" && listCategory?.[0].id,
+        category_name: categoryBill?.name === "" && listCategory?.[0].name,
         uid: currentUser?.uid,
       });
       setMessageSuccess("Formulário enviado com sucesso!");
@@ -79,14 +100,20 @@ export default function FormAddBills(props) {
     }
   };
 
-  useEffect(() => {
-    onSnapshot(collection(db, "Users"), (snapshot) => {
-      const filterUsers = snapshot?.docs?.map((doc) => {
-        return { ...doc?.data(), id: doc?.id };
-      });
-      setListUsers(filterUsers);
+  React.useEffect(() => {
+    const q = query(
+      collection(db, "Users"),
+      where("uid", "==", currentUser.uid)
+    );
+    onSnapshot(q, (querySnapshot) => {
+      setListUsers(
+        querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
     });
-  }, []);
+  }, [currentUser.uid]);
 
   const handleClose = () => {
     setOpen(false);
@@ -171,9 +198,8 @@ export default function FormAddBills(props) {
         </Modal>
       )}
       {state === "default" && (
-        <form className="container-form-tasks-add">
+        <form className="container-form-bills-add">
           <div className="container-inputs">
-         
             <FormControl fullWidth>
               <span className={classes.span} id="demo-simple-select-label">
                 Usuários
@@ -190,21 +216,57 @@ export default function FormAddBills(props) {
                       <option
                         key={index}
                         value={user.id}
-                        name={user.name}
+                        name={user.data.name}
                         onClick={(e) =>
                           setUser({
                             user_id: e.target.value,
-                            user_name: user.name,
+                            user_name: user.data.name,
                           })
                         }
                         onChange={(e) =>
                           setUser({
                             user_id: e.target.value,
-                            user_name: user.name,
+                            user_name: user.data.name,
                           })
                         }
                       >
-                        {user.name}
+                        {user.data.name}
+                      </option>
+                    );
+                  })}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <span className={classes.span} id="demo-simple-select-label">
+                Categorias
+              </span>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                fullWidth
+                native
+              >
+                {listCategory.length > 0 &&
+                  listCategory?.map((category, index) => {
+                    return (
+                      <option
+                        key={index}
+                        value={category.id}
+                        name={category.name}
+                        onClick={(e) =>
+                          setCategoryBill({
+                            id: e.target.value,
+                            name: category.name,
+                          })
+                        }
+                        onChange={(e) =>
+                          setCategoryBill({
+                            id: e.target.value,
+                            name: category.name,
+                          })
+                        }
+                      >
+                        {category?.name}
                       </option>
                     );
                   })}
@@ -215,10 +277,10 @@ export default function FormAddBills(props) {
               required
               fullWidth
               id="title"
-              label="Nome da tarefa"
+              label="Nome da conta"
               name="title"
-              onChange={(e) => setTitleTask(e.target.value)}
-              value={titleTask && titleTask}
+              onChange={(e) => setNameBill(e.target.value)}
+              value={nameBill && nameBill}
               autoFocus
             />
             <TextField
@@ -226,10 +288,22 @@ export default function FormAddBills(props) {
               required
               fullWidth
               id="description"
-              label="Descrição da tarefa"
+              label="Descrição da conta"
               name="description"
-              onChange={(e) => setDescriptionTask(e.target.value)}
-              value={descriptionTask && descriptionTask}
+              onChange={(e) => setDescriptionBill(e.target.value)}
+              value={descriptionBill && descriptionBill}
+              autoFocus
+            />
+
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="pay"
+              label="Valor da conta ex: $0.00"
+              name="pay"
+              onChange={(e) => setPayBill(e.target.value)}
+              value={payBill && payBill}
               autoFocus
             />
 
@@ -251,7 +325,12 @@ export default function FormAddBills(props) {
             className="button-entry"
             type="button"
             onClick={handleSubmit}
-            disabled={titleTask === "" || descriptionTask === ""}
+            disabled={
+              nameBill === "" ||
+              descriptionBill === "" ||
+              payBill === "" ||
+              categoryBill?.id === ""
+            }
             fullWidth
             variant="contained"
             color="success"

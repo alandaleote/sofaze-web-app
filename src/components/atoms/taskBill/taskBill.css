@@ -1,0 +1,46 @@
+.container-box-bills {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+.container-bill {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+.container-actions {
+  display: flex;
+  gap: 1rem;
+}
+.name {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.description {
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.date {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.container-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.button-edit {
+  font-size: 12px;
+}

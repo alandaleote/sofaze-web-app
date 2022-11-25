@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
-import { auth } from "../../firebase/firebase.config";
+import { auth , db} from "../../firebase/firebase.config";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { useAuthValue } from "../../auth-context";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 import { Alert, Avatar } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -23,14 +23,15 @@ import "./register.css";
 const theme = createTheme();
 
 export default function Register() {
+  const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [description, setDescription] = useState("");
   const [password, setPassword] = React.useState("");
   const [msgType, setMsgType] = React.useState("");
   const [msg, setMsg] = React.useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setTimeActive } = useAuthValue();
 
   const validatePassword = () => {
     let isValid = true;
@@ -54,11 +55,19 @@ export default function Register() {
         .then(() => {
           sendEmailVerification(auth.currentUser)
             .then(() => {
-              setTimeActive(true);
+              addDoc(collection(db, "Users"), {
+                name: name,
+                email: email,
+                uid: auth.currentUser?.uid,
+                description: description,
+                created: Timestamp.now(),
+              });
+
               setMsgType("sucesso");
               navigate("/verify-email");
             })
             .catch((error) => {
+              console.log(error)
               setMsgType("error");
               alert(error.message);
               switch (error.message) {
@@ -140,6 +149,28 @@ export default function Register() {
               Cadastro
             </Typography>
             <Box component="form" noValidate sx={{ mt: 1 }}>
+              <TextField
+                onChange={(e) => setName(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Nome"
+                name="name"
+                autoComplete="name"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="description"
+                label="Descrição"
+                name="description"
+                onChange={(e) => setDescription(e.target.value)}
+                value={description && description}
+                autoFocus
+              />
               <TextField
                 onChange={(e) => setEmail(e.target.value)}
                 margin="normal"

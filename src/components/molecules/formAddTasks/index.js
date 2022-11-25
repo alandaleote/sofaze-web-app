@@ -83,14 +83,6 @@ export default function FormAddTasks(props) {
     }
   };
 
-  // useEffect(() => {
-  //   onSnapshot(collection(db, "Users"), (snapshot) => {
-  //     const filterUsers = snapshot?.docs?.map((doc) => {
-  //       return { ...doc?.data(), id: doc?.id };
-  //     });
-  //     setListUsers(filterUsers);
-  //   });
-  // }, []);
 
   React.useEffect(() => {
     const q = query(collection(db, "Users"), where('uid', '==', currentUser.uid));
