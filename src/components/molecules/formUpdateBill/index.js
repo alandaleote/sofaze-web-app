@@ -95,7 +95,7 @@ export default function FormUpdateBill(props) {
         user_name: user?.id,
         user_id: user?.name,
         name: name,
-        pay_bill: payBill,
+        pay_bill: parseFloat(payBill).toFixed(2),
         description: description,
         date_end: formatDate(dateEnd),
       });
