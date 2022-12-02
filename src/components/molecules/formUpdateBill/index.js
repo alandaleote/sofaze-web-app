@@ -230,16 +230,8 @@ export default function FormUpdateBill(props) {
                         key={index}
                         value={user.data.name}
                         name={user.data.name}
-                        onClick={(e) =>
-                          setUser(
-                          user.data.name,
-                          )
-                        }
-                        onChange={(e) =>
-                          setUser(
-                          user.data.name,
-                          )
-                        }
+                        onClick={(e) => setUser(user.data.name)}
+                        onChange={(e) => setUser(user.data.name)}
                       >
                         {user.data.name}
                       </option>
@@ -296,7 +288,6 @@ export default function FormUpdateBill(props) {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               id="description"
               label="Descrição da conta"
@@ -336,7 +327,9 @@ export default function FormUpdateBill(props) {
             className="button-entry"
             type="button"
             onClick={handleUpdate}
-            disabled={false}
+            disabled={
+              dateEnd === undefined || dateEnd === "" || title === ""
+            }
             fullWidth
             variant="contained"
             color="success"

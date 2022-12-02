@@ -165,7 +165,7 @@ function Navbar() {
             </IconButton>
 
             <IconButton>
-              <Link to="/lista-de-tarefas">
+              <Link to="/adicionar-tarefas">
                 <CheckCircleOutlineOutlinedIcon
                   sx={{ fontSize: 32, color: "#F5BE2E" }}
                 />
@@ -179,7 +179,7 @@ function Navbar() {
             </IconButton> */}
 
             <IconButton>
-              <Link to="/contas">
+              <Link to="adicionar-contas">
                 <AttachMoneyOutlinedIcon
                   sx={{ fontSize: 32, color: "#21a179" }}
                 />

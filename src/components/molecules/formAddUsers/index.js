@@ -152,7 +152,6 @@ export default function FormAddUsers(props) {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               id="description"
               label="Descrição"
@@ -178,7 +177,7 @@ export default function FormAddUsers(props) {
             className="button-entry"
             type="button"
             onClick={handleSubmit}
-            disabled={name === "" || email === "" || description === ""}
+            disabled={name === "" || email === ""}
             fullWidth
             variant="contained"
             color="success"
