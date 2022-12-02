@@ -61,9 +61,10 @@ export default function FormUpdateBill(props) {
   } = props;
 
   const categoryList = [
-    { id: "transport", name: "Transport" },
-    { id: "supermarket", name: "supermarket" },
-    { id: "fun", name: "fun" },
+    { id: "others", name: "Outros" },
+    { id: "transport", name: "Transporte" },
+    { id: "supermarket", name: "Supermercado" },
+    { id: "fun", name: "Diversão" },
   ];
 
   const { currentUser } = useAuthValue();
@@ -95,7 +96,7 @@ export default function FormUpdateBill(props) {
         user_name: user?.id,
         user_id: user?.name,
         name: name,
-        pay_bill: payBill,
+        pay_bill: parseFloat(payBill).toFixed(2),
         description: description,
         date_end: formatDate(dateEnd),
       });

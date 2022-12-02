@@ -49,9 +49,10 @@ const style = {
 };
 
 const categoryList = [
-  { id: "transport", name: "Transport" },
-  { id: "supermarket", name: "supermarket" },
-  { id: "fun", name: "fun" },
+  { id: "others", name: "Outros" },
+  { id: "transport", name: "Transporte" },
+  { id: "supermarket", name: "Supermercado" },
+  { id: "fun", name: "Diversão" },
 ];
 
 export default function FormAddBills(props) {
@@ -67,13 +68,11 @@ export default function FormAddBills(props) {
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
   const [user, setUser] = useState({ user_id: "", user_name: "" });
-  const [categoryBill, setCategoryBill] = useState({ id: "", name: "" });
+  const [categoryBill, setCategoryBill] = useState({ id: "others", name: "Outros" });
   const [nameBill, setNameBill] = useState("");
   const [descriptionBill, setDescriptionBill] = useState("");
   const [payBill, setPayBill] = useState("");
   const [dateEnd, setDateEnd] = useState("");
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,7 +87,7 @@ export default function FormAddBills(props) {
         date_end: formatDate(dateEnd),
         user_id: user.user_id,
         user_name: user.user_name,
-        category_id: categoryBill?.id ,
+        category_id: categoryBill?.id,
         category_name: categoryBill?.name,
         uid: currentUser?.uid,
       });
@@ -328,9 +327,7 @@ export default function FormAddBills(props) {
             type="button"
             onClick={handleSubmit}
             disabled={
-              nameBill === "" ||
-              descriptionBill === "" ||
-              payBill === "" 
+              nameBill === "" || descriptionBill === "" || payBill === ""
             }
             fullWidth
             variant="contained"
