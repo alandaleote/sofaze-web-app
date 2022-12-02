@@ -5,6 +5,7 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { useAuthValue } from "../../../auth-context";
 import { Grid } from "@material-ui/core";
 import "./formAddUser.css";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -22,6 +23,8 @@ const style = {
 
 export default function FormAddUsers(props) {
   const { listUsers = [] } = props;
+
+  const navigate = useNavigate();
 
   const { currentUser } = useAuthValue();
 
@@ -67,13 +70,9 @@ export default function FormAddUsers(props) {
     setState("default");
   };
 
-  const handleGoBackForm = () => {
-    setOpen(false);
-    setState("default");
-  };
-
   const handleGoHome = () => {
     setState("default");
+    navigate("/");
   };
 
   return (
@@ -129,15 +128,9 @@ export default function FormAddUsers(props) {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Button
                 sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
-                onClick={handleGoBackForm}
-              >
-                Voltar para o formulaŕio
-              </Button>
-              <Button
-                sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
                 onClick={handleGoHome}
               >
-                Voltar para a Home
+                Voltar
               </Button>
             </Box>
           </Box>

@@ -2,29 +2,27 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthValue } from "../../../auth-context";
 import { db } from "../../../firebase/firebase.config";
-import { doc, updateDoc, collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import {
   Alert,
   Box,
   Button,
   FormControl,
+  InputLabel,
   Modal,
   Select,
   TextField,
 } from "@mui/material";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+import { Grid, MenuItem } from "@material-ui/core";
 import formatDate from "../../../utils/functions";
 import "./formUpdateTask.css";
-
-const useStyles = makeStyles((theme) => ({
-  span: {
-    fontSize: "10px",
-  },
-  select: {
-    background: "white",
-  },
-}));
 
 const style = {
   position: "absolute",
@@ -44,7 +42,6 @@ export default function FormUpdateTask(props) {
   const { id, toEditTitle, toEditDescription, toEditName, toEditDate } = props;
 
   const { currentUser } = useAuthValue();
-  const classes = useStyles();
   const navigate = useNavigate();
 
   const [listUsers, setListUsers] = useState([]);
@@ -78,7 +75,10 @@ export default function FormUpdateTask(props) {
   };
 
   React.useEffect(() => {
-    const q = query(collection(db, "Users"), where('uid', '==', currentUser.uid));
+    const q = query(
+      collection(db, "Users"),
+      where("uid", "==", currentUser.uid)
+    );
     onSnapshot(q, (querySnapshot) => {
       setListUsers(
         querySnapshot.docs.map((doc) => ({
@@ -89,12 +89,9 @@ export default function FormUpdateTask(props) {
     });
   }, [currentUser.uid]);
 
-  const handleClose = () => {
-    setOpen(false);
-    setState("default");
-  };
+  console.log(dateEnd);
 
-  const handleGoBackForm = () => {
+  const handleClose = () => {
     setOpen(false);
     setState("default");
   };
@@ -102,6 +99,11 @@ export default function FormUpdateTask(props) {
   const handleGoHome = () => {
     setState("default");
     navigate("/");
+  };
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setUser(value);
   };
 
   return (
@@ -162,9 +164,9 @@ export default function FormUpdateTask(props) {
                     textTransform: "none",
                     margin: "5px",
                   }}
-                  onClick={handleGoBackForm}
+                  onClick={handleGoHome}
                 >
-                  Voltar para o formulário
+                  Voltar para a home
                 </Button>
               )}
               <Button
@@ -185,27 +187,22 @@ export default function FormUpdateTask(props) {
         <form className="container-form-tasks-update">
           <div className="container-inputs">
             <FormControl fullWidth>
-              <span className={classes.span} id="demo-simple-select-label">
-                Usuários
-              </span>
+              <InputLabel id="demo-simple-select-label">Usuários</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
+                onChange={handleChange}
+                value={user}
+                label="Usuários"
                 fullWidth
-                native
+                required
               >
                 {listUsers.length > 0 &&
                   listUsers?.map((user, index) => {
                     return (
-                      <option
-                        key={index}
-                        value={user.data.id}
-                        name={user.data.name}
-                        onClick={(e) => setUser(user.data.name)}
-                        onChange={(e) => setUser(user.data.name)}
-                      >
+                      <MenuItem key={index} value={user.data.name}>
                         {user.data.name}
-                      </option>
+                      </MenuItem>
                     );
                   })}
               </Select>
@@ -223,7 +220,6 @@ export default function FormUpdateTask(props) {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               id="description"
               label="Descrição da tarefa"
@@ -250,6 +246,12 @@ export default function FormUpdateTask(props) {
           <Button
             className="button-entry"
             type="button"
+            disabled={
+              dateEnd === undefined ||
+              dateEnd === "" ||
+              titleTask === "" ||
+              (user === "" && true)
+            }
             onClick={handleUpdate}
             fullWidth
             variant="contained"

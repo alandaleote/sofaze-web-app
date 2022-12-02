@@ -52,9 +52,8 @@ export default function FormUpdateBill(props) {
     id,
     toEditDescription,
     toEditDate,
-    toEditName,
+    toEditTitle,
     toEditPayBill,
-    toEditUserId,
     toEditUserName,
     toEditCategoryId,
     toEditCategoryName,
@@ -76,8 +75,8 @@ export default function FormUpdateBill(props) {
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [user, setUser] = useState({ id: toEditUserId, name: toEditUserName });
-  const [name, setName] = useState(toEditName);
+  const [user, setUser] = useState(toEditUserName);
+  const [title, setTitle] = useState(toEditTitle);
   const [payBill, setPayBill] = useState(toEditPayBill);
   const [categoryBill, setCategoryBill] = useState({
     id: toEditCategoryId,
@@ -93,9 +92,8 @@ export default function FormUpdateBill(props) {
       await updateDoc(taskDocRef, {
         category_id: categoryBill?.id,
         category_name: categoryBill?.name,
-        user_name: user?.id,
-        user_id: user?.name,
-        name: name,
+        user_name: user,
+        name: title,
         pay_bill: parseFloat(payBill).toFixed(2),
         description: description,
         date_end: formatDate(dateEnd),
@@ -126,11 +124,6 @@ export default function FormUpdateBill(props) {
   }, [currentUser.uid]);
 
   const handleClose = () => {
-    setOpen(false);
-    setState("default");
-  };
-
-  const handleGoBackForm = () => {
     setOpen(false);
     setState("default");
   };
@@ -198,9 +191,9 @@ export default function FormUpdateBill(props) {
                     textTransform: "none",
                     margin: "5px",
                   }}
-                  onClick={handleGoBackForm}
+                  onClick={handleGoHome}
                 >
-                  Voltar para o formulário
+                  Voltar
                 </Button>
               )}
               <Button
@@ -235,19 +228,17 @@ export default function FormUpdateBill(props) {
                     return (
                       <option
                         key={index}
-                        value={user.data.id}
+                        value={user.data.name}
                         name={user.data.name}
                         onClick={(e) =>
-                          setUser({
-                            id: e.target.value,
-                            name: user.data.name,
-                          })
+                          setUser(
+                          user.data.name,
+                          )
                         }
                         onChange={(e) =>
-                          setUser({
-                            id: e.target.value,
-                            name: user.data.name,
-                          })
+                          setUser(
+                          user.data.name,
+                          )
                         }
                       >
                         {user.data.name}
@@ -299,8 +290,8 @@ export default function FormUpdateBill(props) {
               id="name"
               label="Nome da conta"
               name="name"
-              onChange={(e) => setName(e.target.value)}
-              value={name && name}
+              onChange={(e) => setTitle(e.target.value)}
+              value={title && title}
               autoFocus
             />
             <TextField

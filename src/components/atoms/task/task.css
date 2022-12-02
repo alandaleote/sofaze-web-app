@@ -14,15 +14,22 @@
   display: flex;
   gap: 1rem;
 }
-.name {
-  font-size: 16px;
+
+.title-task {
+  font-size: 18px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 20px;
   letter-spacing: 0em;
   text-align: left;
 }
-
-.description {
+.description-task {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.name-task {
   font-size: 14px;
   font-weight: 900;
   line-height: 16px;
@@ -37,9 +44,9 @@
   text-align: left;
 }
 .container-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 .button-edit {
   font-size: 12px;
