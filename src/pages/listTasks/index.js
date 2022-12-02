@@ -100,7 +100,6 @@ export default function ListTasks() {
                     id={task?.id}
                     title={task?.data?.title}
                     completed={task?.data?.completed}
-                    dateLabel="Recorrente - hoje: "
                   />
                 );
               })}

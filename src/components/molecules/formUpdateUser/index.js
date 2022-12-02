@@ -64,11 +64,6 @@ export default function FormUpdateUser(props) {
     setState("default");
   };
 
-  const handleGoBackForm = () => {
-    setOpen(false);
-    setState("default");
-  };
-
   const handleGoHome = () => {
     setState("default");
     navigate("/");
@@ -132,9 +127,9 @@ export default function FormUpdateUser(props) {
                     textTransform: "none",
                     margin: "5px",
                   }}
-                  onClick={handleGoBackForm}
+                  onClick={handleGoHome}
                 >
-                  Voltar para o formulário
+                  Voltar
                 </Button>
               )}
               <Button

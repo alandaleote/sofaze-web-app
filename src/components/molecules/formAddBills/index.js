@@ -121,9 +121,10 @@ export default function FormAddBills(props) {
     setState("default");
   };
 
-  const handleGoBackForm = () => {
+  const handleGoBackList= () => {
     setOpen(false);
     setState("default");
+    navigate("/controle-de-contas");
   };
 
   const handleGoHome = () => {
@@ -184,9 +185,9 @@ export default function FormAddBills(props) {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Button
                 sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
-                onClick={handleGoBackForm}
+                onClick={handleGoBackList}
               >
-                Voltar para o formulaŕio
+                Voltar para lista de contas
               </Button>
               <Button
                 sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}

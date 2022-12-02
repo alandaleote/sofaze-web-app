@@ -1,30 +1,29 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../firebase/firebase.config";
-import { collection, onSnapshot, addDoc, Timestamp, where, query } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  addDoc,
+  Timestamp,
+  where,
+  query,
+} from "firebase/firestore";
 import { useAuthValue } from "../../../auth-context";
 import {
   Alert,
   Box,
   Button,
   FormControl,
+  InputLabel,
+  MenuItem,
   Modal,
   Select,
   TextField,
 } from "@mui/material";
-import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import formatDate from "../../../utils/functions";
 import "./formAddTask.css";
-
-const useStyles = makeStyles((theme) => ({
-  span: {
-    fontSize: "10px",
-  },
-  select: {
-    background: "white",
-  },
-}));
 
 const style = {
   position: "absolute",
@@ -41,7 +40,6 @@ const style = {
 };
 
 export default function FormAddTasks(props) {
-  const classes = useStyles();
   const navigate = useNavigate();
 
   const { currentUser } = useAuthValue();
@@ -54,11 +52,10 @@ export default function FormAddTasks(props) {
   const [messageSuccess, setMessageSuccess] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = useState("default");
-  const [user, setUser] = useState({ user_id: "", user_name: "" });
+  const [user, setUser] = useState("");
   const [titleTask, setTitleTask] = useState("");
   const [descriptionTask, setDescriptionTask] = useState("");
   const [dateEnd, setDateEnd] = useState("");
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,8 +66,7 @@ export default function FormAddTasks(props) {
         completed: false,
         created: Timestamp.now(),
         date_end: formatDate(dateEnd),
-        user_id: user.user_id === "" && listUsers?.[0].id,
-        user_name: user.user_name === "" && listUsers?.[0].data.name,
+        user_name: user,
         uid: currentUser?.uid,
       });
       setMessageSuccess("Formulário enviado com sucesso!");
@@ -83,9 +79,11 @@ export default function FormAddTasks(props) {
     }
   };
 
-
   React.useEffect(() => {
-    const q = query(collection(db, "Users"), where('uid', '==', currentUser.uid));
+    const q = query(
+      collection(db, "Users"),
+      where("uid", "==", currentUser.uid)
+    );
     onSnapshot(q, (querySnapshot) => {
       setListUsers(
         querySnapshot.docs.map((doc) => ({
@@ -101,9 +99,10 @@ export default function FormAddTasks(props) {
     setState("default");
   };
 
-  const handleGoBackForm = () => {
+  const handleGoBackList = () => {
     setOpen(false);
     setState("default");
+    navigate("/lista-de-tarefas");
   };
 
   const handleGoHome = () => {
@@ -111,10 +110,10 @@ export default function FormAddTasks(props) {
     navigate("/");
   };
 
-  // const handleChange = (event) => {
-  //   const value = event.target.value;
-  //   setCategory(value);
-  // };
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setUser(value);
+  };
 
   // const handleClick = (event) => {
   //   setCategory(event.target.value);
@@ -183,9 +182,9 @@ export default function FormAddTasks(props) {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Button
                 sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
-                onClick={handleGoBackForm}
+                onClick={handleGoBackList}
               >
-                Voltar para o formulaŕio
+                Voltar para a lista
               </Button>
               <Button
                 sx={{ fontSize: "12px", textTransform: "none", margin: "5px" }}
@@ -228,37 +227,22 @@ export default function FormAddTasks(props) {
           </Select>
         </FormControl> */}
             <FormControl fullWidth>
-              <span className={classes.span} id="demo-simple-select-label">
-                Usuários
-              </span>
+              <InputLabel id="demo-simple-select-label">Usuários</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
+                onChange={handleChange}
+                value={user}
+                label="Usuários"
                 fullWidth
-                native
+                required
               >
                 {listUsers.length > 0 &&
                   listUsers?.map((user, index) => {
                     return (
-                      <option
-                        key={index}
-                        value={user.id}
-                        name={user.data.name}
-                        onClick={(e) =>
-                          setUser({
-                            user_id: e.target.value,
-                            user_name: user.data.name,
-                          })
-                        }
-                        onChange={(e) =>
-                          setUser({
-                            user_id: e.target.value,
-                            user_name: user.data.name,
-                          })
-                        }
-                      >
+                      <MenuItem key={index} value={user.data.name}>
                         {user.data.name}
-                      </option>
+                      </MenuItem>
                     );
                   })}
               </Select>
@@ -276,7 +260,6 @@ export default function FormAddTasks(props) {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               id="description"
               label="Descrição da tarefa"
@@ -304,7 +287,12 @@ export default function FormAddTasks(props) {
             className="button-entry"
             type="button"
             onClick={handleSubmit}
-            disabled={titleTask === "" || descriptionTask === ""}
+            disabled={
+              titleTask === "" ||
+              user === "" ||
+              dateEnd === undefined ||
+              dateEnd === ""
+            }
             fullWidth
             variant="contained"
             color="success"

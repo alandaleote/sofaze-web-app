@@ -14,7 +14,6 @@ export default function Task(props) {
     name = "",
     description = "",
     date = "",
-    dateLabel = "",
     id = "",
     title = "",
     completed,
@@ -64,11 +63,12 @@ export default function Task(props) {
               inputProps={{ "aria-label": "controlled" }}
             />
             <div className="container-content">
-              <span className="name">{name && name}</span>
-              <span className="description">{description && description}</span>
-              <span className="date">
-                {dateLabel}
-                {date && date}
+              <span className="title-task">{title && title}</span>
+
+              <span className="name-task">{name && name}</span>
+              <span className="date">{date && date}</span>
+              <span className="description-task">
+                {description && description}
               </span>
             </div>
           </div>

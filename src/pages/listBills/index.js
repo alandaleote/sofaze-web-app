@@ -51,7 +51,7 @@ export default function ListBills() {
                 return (
                   <TaskBill
                     key={index}
-                    name={bill?.data?.name}
+                    title={bill?.data?.name}
                     category_name={bill?.data?.category_name}
                     category_id={bill?.data?.category_id}
                     completed={bill?.data?.completed}
@@ -59,9 +59,8 @@ export default function ListBills() {
                     date={bill?.data?.date_end}
                     id={bill?.id}
                     pay_bill={bill?.data?.pay_bill}
-                    user_id={bill?.data?.user_id}
                     user_name={bill?.data?.user_name}
-                    dateLabel="Vencimento - próximo: "
+                    dateLabel="Vencimento: "
                   />
                 );
               })}

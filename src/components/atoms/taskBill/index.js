@@ -12,11 +12,10 @@ import FormUpdateBill from "../../molecules/formUpdateBill";
 export default function TaskBill(props) {
   const {
     pay_bill = "",
-    user_id = ",",
     user_name = "",
     category_id = "",
     category_name = "",
-    name = "",
+    title = "",
     description = "",
     date = "",
     dateLabel = "",
@@ -26,6 +25,8 @@ export default function TaskBill(props) {
 
   const [checked, setChecked] = React.useState(completed);
   const [stateBills, setStateBills] = useState("defaultForm");
+
+  console.log(stateBills)
 
   const handleChange = async (event) => {
     setChecked(event.target.checked);
@@ -68,13 +69,13 @@ export default function TaskBill(props) {
               inputProps={{ "aria-label": "controlled" }}
             />
             <div className="container-content">
-              <span className="name">{category_name && category_name}</span>
-              <span className="name">{name && name}</span>
+              <span className="name">{title && title}</span>
               <span className="description">{pay_bill && pay_bill}</span>
               <span className="date">
                 {dateLabel}
                 {date && date}
               </span>
+              <span className="name">{user_name && user_name}</span>
             </div>
           </div>
           <div className="container-actions">
@@ -93,11 +94,10 @@ export default function TaskBill(props) {
       )}
       {stateBills === "updateBill" && (
         <FormUpdateBill
-          toEditName={name}
+          toEditTitle={title}
           toEditDescription={description}
           toEditDate={date}
           toEditPayBill={pay_bill}
-          toEditUserId={user_id}
           toEditUserName={user_name}
           toEditCategoryId={category_id}
           toEditCategoryName={category_name}
