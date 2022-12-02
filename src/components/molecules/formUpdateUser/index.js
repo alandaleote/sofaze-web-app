@@ -162,7 +162,6 @@ export default function FormUpdateUser(props) {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               id="description"
               label="Descrição"

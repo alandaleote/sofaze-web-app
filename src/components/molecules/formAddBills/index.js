@@ -287,7 +287,6 @@ export default function FormAddBills(props) {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               id="description"
               label="Descrição da conta"
@@ -328,7 +327,7 @@ export default function FormAddBills(props) {
             type="button"
             onClick={handleSubmit}
             disabled={
-              nameBill === "" || descriptionBill === "" || payBill === ""
+              nameBill === "" ||  payBill === ""
             }
             fullWidth
             variant="contained"
