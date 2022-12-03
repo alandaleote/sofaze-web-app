@@ -1,18 +1,26 @@
-# Documentação e Artefatos
+# SÓFAZÊ
+Uma aplicação web criada para o projeto final na unidade curricular Projeto de Desenvolvimento II no Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas Faculdade Senac Porto Alegre.
+
+Autoras: Alanda Leote & Aline Necchi
+
+
+## Documentação e Artefatos
 
 Esse documento tem como objetivo apresentar e descrever o projeto final, fornecendo informações e artefatos sobre a concepção do produto.
 
-## [Canvas MVP](canvas-mvp.md)
+### [Documentação no Medium](https://medium.com/@alandaleote/s%C3%B3faze-26a1f8b12433)
 
-## [Personas](personas.md)
+### [Canvas MVP](Artefatos%20da%20Documentação/canvas-mvp.md)
 
-## [Jornada de Usuário](jornada-usuario.md) 
+### [Personas](Artefatos%20da%20Documentação/personas.md)
 
-## [Stack Tecnológica](stack.md) 
+### [Jornada de Usuário](Artefatos%20da%20Documentação/jornada-usuario.md) 
 
-## [Protótipo](prototipo.md)
+### [Stack Tecnológica](Artefatos%20da%20Documentação/stack.md) 
 
-## [Representação da Arquitetura](arquitetura.md) 
+### [Protótipo](Artefatos%20da%20Documentação/prototipo.md)
+
+### [Representação da Arquitetura](Artefatos%20da%20Documentação/arquitetura.md) 
 
 
 
