@@ -56,6 +56,12 @@ export default function TaskBill(props) {
     }
   };
 
+  const formatValue = (value) => {
+    value = value.replace(".", ',');
+    value = "R$ " + value;
+    return value;
+  }
+
   return (
     <>
       {stateBills === "defaultForm" && (
@@ -70,7 +76,7 @@ export default function TaskBill(props) {
             />
             <div className="container-content">
               <span className="name">{title && title}</span>
-              <span className="description">{pay_bill && pay_bill}</span>
+              <span className="description">{pay_bill && formatValue(pay_bill)}</span>
               <span className="date">
                 {dateLabel}
                 {date && date}
