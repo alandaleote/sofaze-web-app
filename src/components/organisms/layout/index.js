@@ -40,7 +40,8 @@ export default function Layout(props) {
   const classes = useStyles();
 
   function onGoBack() {
-    window.history.back();
+    window.location = "/";
+    // window.history.back();
   }
 
   return (
