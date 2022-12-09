@@ -73,6 +73,10 @@ export default function ListTasks() {
   //   renderTasksEqual();
   // });
 
+  function sortArrayByDate(array) {
+    return array.sort((a,b)=>a.data.date_end.split("-").reverse().join("")-b.data?.date_end.split("-").reverse().join(""));
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Grid
@@ -90,7 +94,7 @@ export default function ListTasks() {
         >
           {tasks.length > 0 ? (
             <div className="container-layout-tasks">
-              {tasks.map((task, index) => {
+              {sortArrayByDate(tasks).map((task, index) => {
                 return (
                   <Task
                     key={index}

@@ -31,6 +31,11 @@ export default function ListBills() {
       );
     });
   }, [currentUser.uid]);
+
+  function sortArrayByDate(array) {
+    return array.sort((a,b)=>a.data.date_end.split("-").reverse().join("")-b.data?.date_end.split("-").reverse().join(""));
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100%" }}>
@@ -47,7 +52,7 @@ export default function ListBills() {
         >
           {bills.length > 0 ? (
             <div className="container-layout-bills">
-              {bills.map((bill, index) => {
+              {sortArrayByDate(bills).map((bill, index) => {
                 return (
                   <TaskBill
                     key={index}
